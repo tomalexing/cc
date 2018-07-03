@@ -1,0 +1,171 @@
+@import "@material/theme/dist/mdc.theme.min.css";
+@import "@material/elevation/dist/mdc.elevation.min.css";
+@import "@material/toolbar/dist/mdc.toolbar.min.css";
+@import "@material/button/dist/mdc.button.min.css";
+
+:root {
+  --mdc-theme-primary: #2A2B31;
+  --mdc-theme-secondary: #1D2024;
+  --mdc-theme-background: #18191D;
+
+  --cc-accent-green: #7ac231;
+  --cc-accent-red: #d0021b;
+  --cc-default-curve: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --cc-text: #858585;
+  --cc-text-white: #f1f1f1;
+}
+ 
+html, body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: var(--mdc-theme-background, #18191D);
+  height: 100%;
+  /* Disable pull-to-refresh in supporting browsers. */
+  overscroll-behavior-y: contain;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.cc-simple-menu {
+  display: none;
+}
+
+/* Fix menu bug. See https://github.com/material-components/material-components-web/issues/1387 */
+.mdc-simple-menu--animating {
+  overflow-y: hidden !important;
+}
+
+.cc-app {
+  display: block;
+  color: #18191D;
+
+  font-family: 'Montserrat', 'Helvetica', 'Arial', sans-serif;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.wf-active .cc-app {
+  font-family: 'Montserrat', 'Helvetica', 'Arial', sans-serif;
+}
+
+.cc-toolbar {
+  position: fixed;
+  z-index: 10;
+}
+
+
+.cc-toolbar__menu-icon__logo {
+    width: 27px;
+    height: 32px;
+    cursor: pointer;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.cc-toolbar__menu-icon__logo img{
+    width: 100%;
+    height: auto;
+}
+
+.cc-toolbar{
+    background: var(--mdc-theme-secondary)
+}
+
+.cc-toolbar__more {
+  opacity: 1;
+  transition: opacity 0.4s var(--cc-default-curve);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.сс-menu {
+  z-index: 15 !important;
+  margin-top: 60px !important;
+}
+
+.cc-desktop-menu{
+  visibility: visible;
+  opacity: 0;
+  transition: opacity 0.4s var(--cc-default-curve);
+}
+.cc-desktop-menu__items{
+  padding-top: 0 !important;
+}
+
+@media (max-width: 600px) {
+  .cc-desktop-menu{
+    visibility: hidden;
+  }
+}
+
+.cc-mobile-menu{
+  visibility: hidden;
+}
+
+@media (max-width: 600px) {
+  .cc-mobile-menu{
+    visibility: visible;
+  }
+}
+
+
+.cc-desktop-menu__items{
+  display: flex;
+  font-family: 'Montserrat', 'Helvetica', 'Arial', sans-serif;
+
+}
+.cc-desktop-menu__items li{
+  padding: 0 8px;
+}
+
+.cc-desktop-menu__items li a, .cc-desktop-menu__items li{
+  color: #f1f1f1;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0.49px;
+  text-transform: uppercase;
+  outline: none;
+  font-family: 'Montserrat', 'Helvetica', 'Arial', sans-serif;
+  transition: color 0.4s var(--cc-default-curve);
+
+
+}
+
+.cc-desktop-menu__items li:hover, .cc-desktop-menu__items li a:hover{
+  color: #7ac231;
+}
+
+.cc-menu-anchor {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mdc-list-link{
+    display: inline-block;
+    text-decoration: none;
+    color: initial;
+    height: 100%;
+    vertical-align: middle;
+    line-height: 48px;
+    width: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.cc-icon {
+  margin-right: 8px;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.mdc-dialog,
+.mdc-dialog__body,
+.mdc-dialog__body{
+  color: var(--cc-text-white, #f1f1f1) !important;
+}
+
+.mdc-dialog .mdc-dialog__footer .mdc-dialog__footer__button::before {
+    background-color: rgba(0, 174, 158, 0.16);
+  }

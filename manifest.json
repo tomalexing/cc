@@ -1,0 +1,19 @@
+{
+    "name": "Coin Exchange",
+    "short_name": "CC",
+    "manifest_version": 2,
+    "description": "A fast, offline-friendly, Material Design-inspired Coin Exchanger.",
+    "icons": [{
+          "src": "images/Logo_256.png",
+          "sizes": "256x256",
+          "type": "image/png"
+        }, {
+          "src": "images/Logo_512.png",
+          "sizes": "512x512",
+          "type": "image/png"
+        }],
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#1d2024",
+    "theme_color": "#1d2024"
+  }

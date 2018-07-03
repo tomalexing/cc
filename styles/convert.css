@@ -1,0 +1,43 @@
+@import "@material/menu/dist/mdc.menu.min.css";
+@import "@material/list/dist/mdc.list.min.css";
+@import "@material/dialog/dist/mdc.dialog.min.css";
+@import "@material/snackbar/dist/mdc.snackbar.min.css";
+
+
+.cc-input__error {
+  position: absolute;
+  bottom: -30px;
+  left: 3px;
+  font-size: 0.9rem;
+  font-weight: 300;
+  line-height: 24px;
+  align-items: center;
+  color: #d0021b;
+
+  opacity: 0;
+  transition: opacity 0.2s var(--mm-default-curve, ease-in-out);
+}
+
+.cc-block--invalid .cc-input__error {
+  opacity: 1;
+}
+
+.cc-input--invalid input,
+input.cc-input--invalid{
+  border: 1px solid rgba(208, 2, 27, .6);
+}
+
+.cc-input__error-message {
+  position: relative;
+  display: inline-block;
+  bottom: 6px;
+  left: -4px;
+}
+
+.cc-app--booted .mdc-dialog {
+  display: flex;
+}
+
+.cc-app--booted .mdc-dialog--open {
+  z-index: 200;
+}

@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, 
+  minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Coin Exchange</title>
+
+  <!-- Disable tap highlight on IE -->
+  <meta name="msapplication-tap-highlight" content="no">
+
+  <!-- Web Application Manifest -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Coin Exchange">
+  <link rel="icon" sizes="192x192" href="images/Logo_192.png">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Coin Exchange">
+  <link rel="apple-touch-icon" href="images/Logo_192.png">
+
+  <!-- Tile icon for Win8 (144x144 + tile color) -->
+  <meta name="msapplication-TileImage" content="images/Logo_144.png">
+  <meta name="msapplication-TileColor" content="#1d2024">
+
+  <!-- Color the status bar on mobile devices -->
+  <meta name="theme-color" content="#1d2024">
+
+  <link rel=icon href=favicon.png sizes="16x16" type="image/png">
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-116769291-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-116769291-3');
+  </script>
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+        (function (d, w, c) {
+            (w[c] = w[c] || []).push(function() {
+                try {
+                    w.yaCounter49457959 = new Ya.Metrika2({
+                        id:49457959,
+                        clickmap:true,
+                        trackLinks:true,
+                        accurateTrackBounce:true,
+                        webvisor:true
+                    });
+                } catch(e) { }
+            });
+
+            var n = d.getElementsByTagName("script")[0],
+                s = d.createElement("script"),
+                f = function () { n.parentNode.insertBefore(s, n); };
+            s.type = "text/javascript";
+            s.async = true;
+            s.src = "https://d31j93rd8oukbv.cloudfront.net/metrika/tag.js";
+
+            if (w.opera == "[object Opera]") {
+                d.addEventListener("DOMContentLoaded", f, false);
+            } else { f(); }
+        })(document, window, "yandex_metrika_callbacks2");
+    </script>
+    <noscript><div><img src="https://d31j93rd8oukbv.cloudfront.net/watch/49457959" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
+
+  <!-- Critical styles -->
+  <!-- {% include critical css %} -->
+</head>
+
+<body class="cc-app">
+  <header class="cc-toolbar mdc-toolbar mdc-elevation--z4 cc-toolbar">
+    <div class="mdc-toolbar__row">
+        <section class="cc-toolbar__appname mdc-toolbar__section mdc-toolbar__section--align-start">
+          <a class="material-icons mdc-toolbar__menu-icon cc-toolbar__menu-icon__logo" aria-label="Logo" alt="Logo">
+            <img alt="Logo" src="images/Logo_144.png">
+          </a>
+        </section>
+        <section class="mdc-toolbar__section mdc-toolbar__section--align-end">
+            <div  style="display: none;" class="cc-desktop-menu">
+                <ul class="cc-desktop-menu__items mdc-list" role="menu" >
+                    <li class="mdc-list-item " role="menuitem" tabindex="0">
+                            <a class="mdc-list-link" target="_blank" href="https://impleum.com/">Impleum</a>
+                    </li>
+                    <li class="mdc-list-item " role="menuitem" tabindex="0">
+                            <a class="mdc-list-link" target="_blank" href="https://explorer.impleum.com/">Explorer</a>
+                    </li>
+                    <li class="mdc-list-item " role="menuitem" tabindex="0">
+                            <a class="mdc-list-link" target="_blank" href="https://github.com/impleum/ImpleumQt/releases"> Wallets </a>
+                    </li>
+                    <li class="mdc-list-item " role="menuitem" tabindex="0">
+                            <a class="mdc-list-link" target="_blank" href="https://impleum.com/wallet/"> Web Wallet </a>
+                    </li>
+                    <li class="mdc-list-item сс-menu__howtobuy" role="menuitem" tabindex="0">
+                            How to Buy
+                    </li>
+                </ul>
+            </div>
+            <div style="display: none;" class="cc-mobile-menu сс-menu-anchor mdc-menu-anchor mdc-toolbar__icon">
+              <a class="material-icons сс-toolbar__more" aria-label="Menu" alt="Menu">
+                <img alt="More" src="images/ic_more_vert.svg">
+              </a>
+              <div class="mdc-simple-menu mdc-toolbar__menu сс-menu" tabindex="-1">
+                <ul class="mdc-simple-menu__items mdc-list" role="menu" aria-hidden="true">
+                  <li class="mdc-list-item сс-menu__info" role="menuitem" tabindex="0">
+                       <a class="mdc-list-link" target="_blank" href="https://impleum.com/">Impleum</a>
+                  </li>
+                  <li class="mdc-list-item " role="menuitem" tabindex="0">
+                       <a class="mdc-list-link" target="_blank" href="https://explorer.impleum.com/">Explorer</a>
+                  </li>
+                  <li class="mdc-list-item " role="menuitem" tabindex="0">
+                        <a class="mdc-list-link" target="_blank" href="https://github.com/impleum/ImpleumQt/releases"> Wallets </a>
+                  </li>
+                  <li class="mdc-list-item " role="menuitem" tabindex="0">
+                        <a class="mdc-list-link" target="_blank" href="https://impleum.com/wallet/"> Web Wallet </a>
+                  </li>
+                  <li class="mdc-list-item сс-menu__howtobuy" role="menuitem" tabindex="0">
+                        How to Buy
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+      
+    </div>
+  </header>
+
+  <div class="cc-exchange cc-screen cc-screen--hidden">
+    <div class="cc-exchange__column">
+        <div class="cc-card mdc-elevation--z10">
+            <h3 class="cc-card__title">
+                    IMP Price and Amount
+            </h3>
+            <div class="cc-prices">
+                <table class="cc-prices-table">
+                    <thead>   
+                        <tr> 
+                            <td style="text-align: left; width: 27%;">Price</td>
+                            <td style="text-align: center; width: 30%;">Discount</td>
+                            <td style="text-align: left">Amount</td> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span data-cc-bind="price.first.amountBTC"></span>
+                                <span class="cc-prices-table__addon"    data-cc-bind="price.symbolBTC"></span>
+                            </td>
+                            <td style="text-align: center">
+                                <span data-cc-bind="price.first.discount"></span>
+                            </td>
+                            <td>
+                                <span data-cc-bind="price.first.amountIMP"></span>
+                                <span class="cc-prices-table__addon">(coins total)</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span data-cc-bind="price.second.amountBTC"></span>
+                                <span class="cc-prices-table__addon"    data-cc-bind="price.symbolBTC"></span>
+                            </td>
+                            <td style="text-align: center">
+                                <span data-cc-bind="price.second.discount"></span>
+                            </td>
+                            <td>
+                                <span data-cc-bind="price.second.amountIMP"></span>
+                                <span class="cc-prices-table__addon">(coins total)</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span data-cc-bind="price.third.amountBTC"></span>
+                                <span class="cc-prices-table__addon"    data-cc-bind="price.symbolBTC"></span>
+                            </td>
+                            <td style="text-align: center">
+                                <span data-cc-bind="price.third.discount"></span>
+                            </td>
+                            <td>
+                                <span data-cc-bind="price.third.amountIMP"></span>
+                                <span class="cc-prices-table__addon">(coins total)</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span data-cc-bind="price.fourth.amountBTC"></span>
+                                <span class="cc-prices-table__addon"    data-cc-bind="price.symbolBTC">(coins total)</span>
+                            </td>
+                            <td style="text-align: center">
+                                <span data-cc-bind="price.fourth.discount"></span>
+                            </td>
+                            <td>
+                                <span data-cc-bind="price.fourth.amountIMP"></span>
+                                <span class="cc-prices-table__addon">(coins total)</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span data-cc-bind="price.fifth.amountBTC"></span>
+                                <span class="cc-prices-table__addon"    data-cc-bind="price.symbolBTC"></span>
+                            </td>
+                            <td style="text-align: center">
+                                <span data-cc-bind="price.fifth.discount"></span>
+                            </td>
+                            <td>
+                                <span data-cc-bind="price.fifth.amountIMP"></span>
+                                <span class="cc-prices-table__addon">(coins total)</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="cc-card mdc-elevation--z10">
+            <h3 class="cc-card__title">
+                Amount till next price increase
+            </h3>
+            <div>
+                <span class="cc-residue" data-cc-bind="residue.amount"></span> <span class="cc-residue__addon">IMP</span>
+            </div>
+        </div>
+    </div>
+    <div class="cc-exchange__column">
+        <div class="cc-card mdc-elevation--z10">
+            <h3 class="cc-card__title">
+                CALCULATOR
+            </h3>
+            <div id="calc" class="cc-exchange__block">
+                <div class="cc-exchange__block__inline">
+                    <div id="calc-BTC" class="cc-input">
+                        <div class="cc-input__vc">
+                            <input type="number" min="0" step="any" class="cc-input__value" placeholder="" aria-label="BTC coin amount"></input>
+                            <div class="cc-input__back"></div>
+                            <div class="cc-input__label">BTC</div>
+
+                        </div>
+                    </div>
+                    
+                    <div class="cc-calc__eq">=</div>
+
+                    <div id="calc-IMP" class="cc-input">
+                            <div class="cc-input__vc">
+                                <input type="number" min="0" step="any" class="cc-input__value" placeholder="" aria-label="IMP coin amount"></input>
+                                <div class="cc-input__back"></div>
+                                <div class="cc-input__label">IMP</div>
+                            </div>
+                    </div>
+                    <div class="cc-calc-error cc-input__error" aria-hidden="true">
+                            <span class="cc-input__error-message cc-input__error-message__calc">Please enter a valid number.</span>
+                    </div>
+                </div>
+                
+            </div>
+            <h3 class="cc-card__title">
+                REGISTER YOUR <a class="cc-card__link" target="_blank" href="https://impleum.com/wallet">IMPLEUM WALLET</a> ADDRESS <span class="cc-card__tooltip" onclick="void(0)"><span class="cc-card__tooltip-mark">i</span><span class="cc-card__tooltip-popup__cover"><i class="cc-card__tooltip-popup">Get your impleum wallet by <a target="_blank" class="cc-card__link" href="https://impleum.com/wallet">link</a> </i></span></span>
+            </h3>
+            <div id="register" class="cc-exchange__block">
+                <div class="cc-exchange__block__inline">
+                    <div class="cc-input cc-input--width">
+                        <div class="cc-input__vc">
+                            <form class="cc-register__form"><input class="cc-input__value " placeholder="" aria-label="IMP address"></input>
+                            <div class="cc-input__back"></div>
+                        </div>
+                        <div class="cc-register-error cc-input__error" aria-hidden="true">
+                            <span class="cc-input__error-message">Please enter a valid Impleum wallet.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cc-buttons">
+                    <button class="mdc-button mdc-button--raised cc-button cc-edit__btn cc-btn--hidden" >edit</button>
+                    <button class="mdc-button mdc-button--raised cc-button cc-register__btn" >register</button>
+                </div>
+            </div>
+            <div id="depositBlock" class="cc-exchange--hide">
+                <h3 class="cc-card__title">
+                    BITCOIN DEPOSIT ADDRESS
+                </h3>
+                <div id="deposit" class="cc-exchange__block">
+                    <div class="cc-exchange__block__inline">
+                        <div class="cc-input cc-input--width">
+                            <div class="cc-input__vc">
+                                <input class="cc-input__value " readonly placeholder="" aria-label="BTC address"></input>
+                                <div class="cc-input__back"></div>
+                            </div>
+                            <div class="cc-deposit-error cc-input__error" aria-hidden="true">
+                                <span class="cc-input__error-message ">Please enter a valid adress.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cc-buttons">
+                        <button class="mdc-button mdc-button--raised cc-button cc-deposit__btn">copy address</button>
+                    </div>
+                </div>
+            </div>
+            <div id="qr" class="cc-exchange__block cc-exchange--hide">
+                <div class="cc-exchange__block__inline">
+                    <canvas  class="cc-qrcode"></canvas>
+                    <div class="cc-input">
+                        <div class="cc-input__ta">
+                            <a data-cc-bind="qr.link" target="_blank" class="cc-input__value"></a>
+                            <div class="cc-input__back"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cc-buttons">
+                    <a class="mdc-button mdc-button--raised cc-button cc-app__btn" data-cc-bind="qr.bitcoin" >buy in app</a>
+                    <button class="mdc-button mdc-button--raised cc-button cc-qrcode__btn">copy link</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cc-exchange__column">
+        <div id="history" class="cc-card mdc-elevation--z10 cc-exchange--hide">
+            <h3 class="cc-card__title">
+                TRANSACTIONS
+            </h3>
+            <div id="historyAdd" class="cc-exchange__block">
+                EMPTY
+            </div>
+        </div>
+        <div class="cc-card mdc-elevation--z10">
+            <h3 class="cc-card__title">
+                General Risk Warning
+            </h3>
+            <div class="cc-exchange__block">
+                <div class="cc-exchange__block-in">   
+                    The financial services provided by this website carry a high level of risk and can result in the loss of all your funds. You should never invest money that you cannot afford to lose.
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </div>
+
+
+  <div class="cc-animation">
+    <div class="cc-animation__ruler"></div>
+    <div class="cc-animation__clip">
+      <div class="cc-animation__item"></div>
+    </div>
+    <div class="cc-animation__hero"></div>
+  </div>
+
+  <div class="cc-loading">
+    Please wait while the application loads.
+  </div>
+
+  <aside id="cc-exchange-dialog"
+    class="mdc-dialog"
+    role="alertdialog"
+    aria-hidden="true"
+    aria-labelledby="cc-exchange-dialog-label"
+    aria-describedby="cc-exchange-dialog-description">
+    <div class="mdc-dialog__surface">
+        <iframe width="100%" height="315" src="https://www.youtube.com/embed/R1VQfsXYw-c" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+    <div class="mdc-dialog__backdrop"></div>
+  </aside>
+
+  <aside id="cc-about-dialog"
+    class="mdc-dialog"
+    role="alertdialog"
+    aria-hidden="true"
+    aria-labelledby="cc-about-dialog-label"
+    aria-describedby="cc-about-dialog-description">
+    <div class="mdc-dialog__surface">
+      <header class="mdc-dialog__header">
+        <h2 id="cc-about-dialog-label" class="mdc-dialog__header__title">
+          
+        </h2>
+      </header>
+      <section id="cc-about-dialog-description" class="mdc-dialog__body">
+
+      </section>
+      <footer class="mdc-dialog__footer">
+        <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--accept">Close</button>
+      </footer>
+    </div>
+    <div class="mdc-dialog__backdrop"></div>
+  </aside>
+
+  <div class="mdc-snackbar cc-snackbar"
+      aria-live="assertive"
+      aria-atomic="true"
+      aria-hidden="true">
+    <div class="mdc-snackbar__text"></div>
+    <div class="mdc-snackbar__action-wrapper">
+      <button type="button" class="mdc-button mdc-snackbar__action-button"></button>
+    </div>
+  </div>
+  <!-- {% include main js %} -->
+
+  <!-- Register Service Worker 
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(function(err) {
+        console.log('ServiceWorker registration failed: ', err);
+      });
+    }
+  </script>
+  -->
+  <!-- Start of LiveChat (www.livechatinc.com) code -->
+    <script type="text/javascript">
+    window.__lc = window.__lc || {};
+    window.__lc.license = 9907775;
+    (function() {
+      var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
+      lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
+    })();
+    </script>
+    <!-- End of LiveChat code -->
+</body>
