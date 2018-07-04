@@ -31,7 +31,7 @@ const ALLSTYLES = ['styles/**/*.css'];
 const ALLJS = ['scripts/**/*.js'];
 const IMAGES = ['images/**/*.{svg,png}'];
 const ROOT = ['*.{txt,ico,go}', 'manifest.json', 'sw.js', 'app.yaml'];
-const HTML = ['index.html'];
+const HTML = ['*.html'];
 const WELL_KNOWN = ['well_known/**.*'];
 
 const BROWSERS = ['last 2 Chrome versions', 'last 2 Firefox versions',

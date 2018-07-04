@@ -82,12 +82,12 @@ export function wait(timeout) {
    * @returns {Promise.<Object>} The constructed promise.
    *
    */
-  export function get(url, payload, num) {
+  export function get(url, payload = {}, num, method = 'POST') {
     return createQueue(() => 
         Promise.race([
           new Promise((resolve, reject) => setTimeout(_ => {resolve({result: null})}, 10000)),
           fetch(url, {
-            method: 'POST',
+            method,
             headers: {
               'content-type': 'application/json',
               'accept': 'application/json'

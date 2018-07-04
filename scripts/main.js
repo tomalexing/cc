@@ -113,6 +113,7 @@ class App {
     };
 
     this._elements = {
+      price: document.querySelector('.cc-prices'),
       registerBtn: document.querySelector('.cc-register__btn'),
       editBtn: document.querySelector('.cc-edit__btn'),
       depositBtn: document.querySelector('.cc-deposit__btn'),
@@ -132,6 +133,7 @@ class App {
       menuM: document.querySelector('.cc-mobile-menu'),
       menuD: document.querySelector('.cc-desktop-menu'),
       depositBlock: document.querySelector('#depositBlock'),
+      cmc: document.querySelector('#cmc'),
     };
 
     this._model = {
@@ -166,7 +168,7 @@ class App {
         amount: new ModelEntry('calc.amountIMP'),
         computedAmount: new ModelEntry('calc.amountComputedIMP'),
       },
-      calcBTC: {
+      calcBTC: { 
         amount: new ModelEntry('calc.amountBTC'),
         computedAmount: new ModelEntry('calc.amountComputedBTC'),
         realComputedAmount: new ModelEntry()
@@ -177,6 +179,10 @@ class App {
       qr:{
         link: new ModelEntry('qr.link'),
         bitcoin: new ModelEntry('qr.bitcoin')
+      },
+      cmc:{
+        link: new ModelEntry('cmc.change'),
+        bitcoin: new ModelEntry('cmc.amount')
       }
     }
 
@@ -245,6 +251,8 @@ class App {
         ]);
 
         this._booted.then(() => this._hideLoadingScreen());
+
+        if(this._elements.menuD && this._elements.menuM)
         this._booted.then( _ => PromiseUtils.wait(200).then( _ => {
           if( window.innerWidth <= 600 ){
             this._elements.menuM.style.display = 'block'
@@ -266,22 +274,45 @@ class App {
 
         });
 
+
   }
 
   _initElements(){
 
+    if(document.querySelector('.mdc-toolbar__menu')){
 
-    const menu = new MDCSimpleMenu(document.querySelector('.mdc-toolbar__menu'));
-    this._snackbar = new MDCSnackbar(document.querySelector('.cc-snackbar'));
+      const menu = new MDCSimpleMenu(document.querySelector('.mdc-toolbar__menu'));
 
+      this._elements.more.addEventListener('click', () =>
+      this._booted.then(() => (menu.open = !menu.open)));
+    
+    }
 
-    const howtobuyDialog = new MDCDialog(document.querySelector('#cc-exchange-dialog'));
+    if(document.querySelector('.cc-snackbar')){
+      this._snackbar = new MDCSnackbar(document.querySelector('.cc-snackbar'));
+    }
 
-    Array.from(document.querySelectorAll('.сс-menu__howtobuy')).map(el => el.addEventListener('click', () => howtobuyDialog.show()));
+    if(document.querySelector('#cc-exchange-dialog')) {
+      const howtobuyDialog = new MDCDialog(document.querySelector('#cc-exchange-dialog'));
+      Array.from(document.querySelectorAll('.сс-menu__howtobuy')).map(el => el.addEventListener('click', () => howtobuyDialog.show()));
+    }
 
+    if(document.querySelector('#cc-about-dialog')) {
+      const greetingDialog = new MDCDialog(document.querySelector('#cc-about-dialog'));
+      Array.from(document.querySelectorAll('.сс-menu__greeting')).map(el => el.addEventListener('click', () => greetingDialog.show()));
+    
 
-    this._elements.more.addEventListener('click', () =>
-    this._booted.then(() => (menu.open = !menu.open)));
+      this._booted.then(() => {
+        var searchParams = new URLSearchParams(window.location.search);
+        if( searchParams.has('greeting') ){
+          let greeting = searchParams.get('greeting');
+          if(greeting == 'show'){
+            greetingDialog.show();
+          }
+        }
+      });
+    }
+
 
     this._calcIMP = document.querySelector('#calc-IMP');
     this._calcBTC = document.querySelector('#calc-BTC');
@@ -293,22 +324,26 @@ class App {
     this._depositBox = document.querySelector('#deposit .cc-input__value');
 
     // Set up event listeners for modifying the model.
+    if( this._calcIMPBox )
     this._calcIMPBox.addEventListener('input', () => this._booted.then(() => {
       this._model.calcIMP.amount.value = parseFloat(this._calcIMPBox.value);
       this._validateInput('amountIMP');
     }));
-    
+
+    if( this._calcBTCBox )
     this._calcBTCBox.addEventListener('input', () => this._booted.then(() => {
       this._model.calcBTC.amount.value = parseFloat(this._calcBTCBox.value);
       this._validateInput('amountBTC');
     }));
 
+    if( this._registerBox )
     this._registerBox.addEventListener('input', () => this._booted.then(() => {
       this._walletRegister = false;
       this._elements.registerBtn.removeAttribute('disabled')
       this._validateAddress();
     }));
     
+    if( this._elements.registerForm )
     this._elements.registerForm.addEventListener('submit', (e) => {
       e.preventDefault();
       this._booted.then(() => {
@@ -318,6 +353,7 @@ class App {
       }) 
     });
 
+    if( this._elements.registerBtn )
     this._elements.registerBtn.addEventListener('click', () =>
       this._booted.then( _ => {
         if( this._validIMPAddress ){
@@ -326,6 +362,7 @@ class App {
       })
     );
 
+    if( this._elements.editBtn )
     this._elements.editBtn.addEventListener('click', () =>
       this._booted.then( _ => {
         this._elements.registerBtn.classList.remove('cc-btn--hidden');
@@ -334,12 +371,14 @@ class App {
       })
     );
 
+    if( this._elements.depositBtn )
     this._elements.depositBtn.addEventListener('click', () =>
       this._booted.then( _ => {
         copyToClipboard(this._model.register.address.value.btc_address)
       })
     );
 
+    if( this._elements.qrBtn )
     this._elements.qrBtn.addEventListener('click', () =>
       this._booted.then( _ => {
         copyToClipboard(this._model.qr.link.value)
@@ -351,7 +390,7 @@ class App {
 
   _initModel(){
 
-    let { price, residue, calcIMP, calcBTC, register } = this._model;
+    let { price, residue, calcIMP, calcBTC, register, cmc } = this._model;
 
     const convertInModel = async (from, to, fromCur, toCur) => {
       const amount = from.amount.value;
@@ -369,21 +408,26 @@ class App {
 
     price.symbolBTC.value = 'BTC';
 
-
     // Load price from local storage, if available.
-    const loadPrice = this._loadPrice()
-    .then((price) => price, () => this._fetchPrice().then(this._storePrice));
+    let loadPrice;
 
-    // Try to fetch latest price, regardless.
-    PromiseUtils.after(loadPrice, () =>
-        this._fetchPrice().then(this._storePrice).catch());
+    if( this._elements.price ){
+      loadPrice = this._loadPrice()
+        .then((price) => price, () => this._fetchPrice().then(this._storePrice));
 
-    // Load price from local storage, if available.
-    const loadHistory = this._loadHistory().catch(_=>{});
+      // Try to fetch latest price, regardless.
+      PromiseUtils.after(loadPrice, () =>
+          this._fetchPrice().then(this._storePrice).catch());
 
-    PromiseUtils.after(loadPrice, () => this._fetchHistory().catch());
+
+      // Load price from local storage, if available.
+      const loadHistory = this._loadHistory().catch(_=>{});
+
+      PromiseUtils.after(loadPrice, () => this._fetchHistory().catch());
+    }
 
     // Load adress from local storage, if available.
+    if( this._elements.registerBox ){
     const loadWallet = this._loadWallet()
       .then((val) => { register.address.value = val; }, () => {  // fallback
           if (window.location) {
@@ -393,7 +437,7 @@ class App {
               return this._registerWallet(walletBTC)
             }
           }
-      }).then(_ => { // check if request forces changing imp wallet
+      }).then( _ => { // check if request forces changing imp wallet
         if (window.location) {
           var searchParams = new URLSearchParams(window.location.search);
           if( searchParams.has('from') ){
@@ -407,6 +451,7 @@ class App {
           } 
         }
       })
+    }
   
     // Update computed values when value changes.
     calcIMP.amount.listen(() => convertInModel(calcIMP, calcBTC, 'imp', 'btc'));
@@ -505,6 +550,28 @@ class App {
     });
 
 
+    if(this._elements.cmc){
+      this._fetchCMC().then(res => {
+        debugger;
+        if(res.data){
+     
+        }
+      }, _ => {
+        debugger;
+      })
+
+    }
+
+
+  }
+
+ /**
+   * Returns a promise with Bitcoin data from CoinMarketCap.
+   *
+   * @return {Promise} Promise for the storage success.
+   */
+  _fetchCMC(){
+    return PromiseUtils.get('https://widgets.coinmarketcap.com/v2/ticker/1/', {}, 2, 'GET');
   }
 
   /**
@@ -552,7 +619,7 @@ class App {
 
       } catch (error) {
 
-        this._snackbar.show({
+        this._snackbar && this._snackbar.show({
           message: 'Connection with server has been lost.',
         });
       }
@@ -648,7 +715,7 @@ class App {
       "jsonrpc": "2.0",
       "id": 0,
     }).then(v=>v,_=>{
-      this._snackbar.show({
+      this._snackbar && this._snackbar.show({
         message: 'Connection with server has been lost.',
       });
     });
@@ -699,7 +766,7 @@ class App {
 
       } catch (error) {
 
-        this._snackbar.show({
+        this._snackbar && this._snackbar.show({
           message: 'Connection with server has been lost.',
         });
       }
@@ -720,7 +787,7 @@ class App {
       "jsonrpc": "2.0",
       "id": 0,
     }).then(v=>v,_=>{
-        this._snackbar.show({
+      this._snackbar && this._snackbar.show({
           message: 'Connection with server has been lost.',
         });
     });
@@ -743,7 +810,7 @@ class App {
       "jsonrpc": "2.0",
       "id": 0,
     }).then(v=>v,_=>{
-      this._snackbar.show({
+      this._snackbar && this._snackbar.show({
         message: 'Connection with server has been lost.',
       });
     });
@@ -892,7 +959,7 @@ class App {
 
       } catch (error) {
 
-        this._snackbar.show({
+        this._snackbar && this._snackbar.show({
           message: 'Connection with server has been lost.',
         });
       }

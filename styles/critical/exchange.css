@@ -12,6 +12,11 @@
 .cc-exchange__column{
   display: block;
 }
+
+.cc-exchange__column--w340{
+  width: 340px !important;
+}
+
 .cc-exchange--hide{
   height: 0;
   position: absolute;
@@ -267,7 +272,7 @@
   z-index: 2;
   font-size: 12px;
   letter-spacing: 0.3px;
-
+  -moz-appearance: textfield;
 }
 
 

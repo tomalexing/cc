@@ -34,6 +34,10 @@ input.cc-input--invalid{
   left: -4px;
 }
 
+.cc-input__error-message--correctTop{
+  bottom: -18px !important;
+}
+
 .cc-app--booted .mdc-dialog {
   display: flex;
 }

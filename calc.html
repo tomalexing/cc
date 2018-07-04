@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, 
+  minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Coin Exchange</title>
+
+  <!-- Disable tap highlight on IE -->
+  <meta name="msapplication-tap-highlight" content="no">
+
+  <!-- Web Application Manifest -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Coin Exchange">
+  <link rel="icon" sizes="192x192" href="images/Logo_192.png">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Coin Exchange">
+  <link rel="apple-touch-icon" href="images/Logo_192.png">
+
+  <!-- Tile icon for Win8 (144x144 + tile color) -->
+  <meta name="msapplication-TileImage" content="images/Logo_144.png">
+  <meta name="msapplication-TileColor" content="#1d2024">
+
+  <!-- Color the status bar on mobile devices -->
+  <meta name="theme-color" content="#1d2024">
+
+  <link rel=icon href=favicon.png sizes="16x16" type="image/png">
+
+
+  <!-- Critical styles -->
+  <!-- {% include critical css %} -->
+</head>
+
+<body class="cc-app">
+
+  <div class="cc-exchange cc-screen cc-screen--hidden cc-screen--pt0">
+
+    <div class="cc-exchange__column cc-exchange__column--w340">
+        <div class="cc-card mdc-elevation--z10">
+            <h3 class="cc-card__title">
+                CALCULATOR
+            </h3>
+            <div id="calc" class="cc-exchange__block">
+                <div class="cc-exchange__block__inline">
+                    <div id="calc-BTC" class="cc-input">
+                        <div class="cc-input__vc">
+                            <input type="number" min="0" step="any" class="cc-input__value" placeholder="" aria-label="BTC coin amount"></input>
+                            <div class="cc-input__back"></div>
+                            <div class="cc-input__label">BTC</div>
+                        </div>
+                    </div>
+                    
+                    <div class="cc-calc__eq">=</div>
+
+                    <div id="calc-IMP" class="cc-input">
+                            <div class="cc-input__vc">
+                                <input type="number" min="0" step="any" class="cc-input__value" placeholder="" aria-label="IMP coin amount"></input>
+                                <div class="cc-input__back"></div>
+                                <div class="cc-input__label">IMP</div>
+                            </div>
+                    </div>
+                    <div class="cc-calc-error cc-input__error" aria-hidden="true">
+                            <span class="cc-input__error-message cc-input__error-message__calc cc-input__error-message--correctTop">Please enter a valid number.</span>
+                    </div>
+                </div>
+                <div class="cc-buttons">
+                    <a class="mdc-button mdc-button--raised cc-button cc-app__btn" target="_blank" href="http://btcimp.trade/">buy</a>
+                </div>
+                
+            </div>
+
+        </div>
+    </div>
+
+
+  </div>
+
+
+  <div class="cc-loading">
+    Please wait while the application loads.
+  </div>
+
+    <!-- {% include main js %} -->
+
+
+</body>

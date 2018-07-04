@@ -15,7 +15,7 @@ export default class ModelEntry {
       this._bound =
           this._name ? document.querySelectorAll(`[data-cc-bind='${name}']`) : [];
     }
-  
+    
     /**
      * Getter for the value of the entry.
      * @return {*} The value.
@@ -28,7 +28,7 @@ export default class ModelEntry {
      * Setter for the value of the entry.
      * @param {*} val The value.
      */
-    set value(val) {
+    set value(val) { 
       this._value = val;
   
       for (const listener of this._listeners) {
@@ -73,13 +73,14 @@ export default class ModelEntry {
       }
     }
   
-    /**
+    /** 
      * Attach a listener to this entry, to be notified of changes.
      * @param {function(val)} listener The listening function to attach.
      */
     listen(listener) {
       this._listeners.push(listener);
     }
+
   
     /**
      * Detach a listener from this entry.
