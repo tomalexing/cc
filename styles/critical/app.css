@@ -166,6 +166,10 @@ ul{
     -webkit-tap-highlight-color: transparent;
 }
 
+.cc-nomargin{
+  margin: 0 !important;
+}
+
 .cc-icon {
   margin-right: 8px;
   height: 1.5rem;

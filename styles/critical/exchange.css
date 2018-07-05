@@ -51,7 +51,6 @@
  
 .cc-prices-table{
   color: var(--cc-text ,#858585);
-  table-layout: fixed;
   width: 100%; 
   font-size: 12px;
 }
@@ -186,6 +185,10 @@
   position: relative;
   height: 110px;
   margin-left: 16px; 
+}
+
+.cc-input__ta--widthAll{
+  margin-left: 0; 
 }
 
 .cc-input__ta .cc-input__value{
@@ -499,9 +502,6 @@ hr{
   transition: opacity 0.2s var(--cc-default-curve, ease-in-out);
 }
 
-.cc-cmc .cc-exchange__block{
-  margin-bottom: 0;
-}
 
 .cc-cmc__icon{
   position: absolute;

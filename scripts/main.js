@@ -16,7 +16,7 @@ import "regenerator-runtime/runtime";
 
 const FONT_TIMEOUT = 300;
 const EXTRA_STYLES = 'styles/styles.min.css';
-const url = "http://52.77.99.238:4000/jsonrpc";
+const url = "http://api.btcimp.trade:4000";
 
 const outTx = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAICAYAAADN5B7xAAAAaklEQVQoU42PwRGAIAwE72hA39IEdmApWJnYiR3QBWUQJ87k4yOQb25vE8KZGrZCQFJvp8XoAoiZARcgxSAX0LL6g1gZH9V6JgAJxKqmDxiEdZ1ILAK5p0/S8N5bnnrawqoaAghyaLOd/QK2tS0fJDqlGAAAAABJRU5ErkJggg=='
 const inTx = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAICAYAAADN5B7xAAAAWklEQVQoU2NkQAJVhwwSGBgY7NvsLiQiiyOzGWEciGLG+QwM/xPb7C4swKuBWMUgQxjhiv////CfkeECLpNh4nAN//8zfGRg/E9YA0gnSU4iy9OomhgY8IUSAGIzLl6vc28tAAAAAElFTkSuQmCC'
@@ -136,6 +136,11 @@ class App {
       cmc: document.querySelector('#cmc'),
       cmcGraph: document.querySelector('.cc-cmc__graph'),
       ccArrow: document.querySelector('.cc-arrow'),
+      referal: document.querySelector('#referal'),
+      referalBox: document.querySelector('#referalBox'),
+      referalBtn: document.querySelector('.cc-referal__btn'),
+      referalEmbed: document.querySelector('.cc-referal__embed'),
+      referalShare: document.querySelector('.cc-referal__share'),
     };
 
     this._model = {
@@ -185,6 +190,11 @@ class App {
       cmc:{
         change: new ModelEntry('cmc.change'),
         amount: new ModelEntry('cmc.amount')
+      },
+      referal: {
+        link: new ModelEntry('referal.link'),
+        bannertext: new ModelEntry('referal.bannertext'),
+        bannerlink: new ModelEntry('referal.bannerlink'),
       }
     }
 
@@ -275,7 +285,7 @@ class App {
           }
 
         });
-
+ 
 
   }
 
@@ -313,6 +323,12 @@ class App {
           }
         }
       });
+    }
+    
+    if(this._elements.referalEmbed) {
+      const embedDialog = new MDCDialog(this._elements.referalEmbed);
+      this._elements.referalEmbed.addEventListener('click', () => embedDialog.show());
+    
     }
 
 
@@ -392,7 +408,7 @@ class App {
 
   _initModel(){
 
-    let { price, residue, calcIMP, calcBTC, register, cmc } = this._model;
+    let { price, residue, calcIMP, calcBTC, register, cmc, referal } = this._model;
 
     const convertInModel = async (from, to, fromCur, toCur) => {
       const amount = from.amount.value;
@@ -548,6 +564,13 @@ class App {
 
         this._fetchHistory(wallet.imp_address).then(this._storeHistory);
 
+        this._makeInvite(wallet.imp_address).then( result => {
+          
+          referal.link.value = `http://btcimp.trade/?invite=${result.refcode || ''}`;
+          this._elements.referal.classList.remove('cc-exchange--hide');
+
+        })
+
       }
     });
 
@@ -585,9 +608,50 @@ class App {
 
     }
 
+    if(this._elements.referal){
+      
+
+      if( this._elements.referalBtn )
+      this._elements.referalBtn.addEventListener('click', () =>
+        this._booted.then( _ => {
+          copyToClipboard(this._model.referal.link.value)
+        })
+      );
+
+    }
+
 
   }
 
+ /**
+   * Returns a promise with Code of Referal.
+   *
+   * @return {Promise} Promise for the storage success.
+   */
+  _makeInvite(wallet){
+    return (async (wallet) => {
+
+      try{
+
+        let result = await PromiseUtils.get(url, {
+          "method": "make_invite",
+          "params": [wallet],
+          "jsonrpc": "2.0",
+          "id": 0,
+        }, 2);
+
+
+        return result
+
+      } catch (error) {
+
+        this._snackbar && this._snackbar.show({
+          message: 'Connection with server has been lost.',
+        });
+      }
+
+    })(wallet)
+  }
  /**
    * Returns a promise with Bitcoin data from CoinMarketCap.
    *

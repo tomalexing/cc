@@ -56,6 +56,19 @@ def main():
     print(response)
 ### {u'jsonrpc': u'2.0', u'result': {u'imp_address': u'i5mc1WwPZdfkYj5NKTiU1aDDKW2J3E3ZUV', u'btc_address': u'3JoGiD3v2sdtWbyafBnz4j5Gp7AArGU9af'}, u'id': 0}
 
+
+
+    payload = {
+        "method": "make_invite",
+        "params": ["i5mc1WwPZdfkYj5NKTiU1aDDKW2J3E3ZUV"],
+        "jsonrpc": "2.0",
+        "id": 0,
+    }
+    response = requests.post(
+        url, data=json.dumps(payload), headers=headers).json()
+
+    print(response)
+
 if __name__=='__main__':
 	main()
 

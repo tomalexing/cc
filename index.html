@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, 
   minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Coin Exchange</title>
+  <title>CryptoChange</title>
 
   <!-- Disable tap highlight on IE -->
   <meta name="msapplication-tap-highlight" content="no">
@@ -16,13 +16,13 @@
 
   <!-- Add to homescreen for Chrome on Android -->
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="Coin Exchange">
+  <meta name="application-name" content="CryptoChange">
   <link rel="icon" sizes="192x192" href="images/Logo_192.png">
 
   <!-- Add to homescreen for Safari on iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Coin Exchange">
+  <meta name="apple-mobile-web-app-title" content="CryptoChange">
   <link rel="apple-touch-icon" href="images/Logo_192.png">
 
   <!-- Tile icon for Win8 (144x144 + tile color) -->
@@ -236,27 +236,23 @@
                 <span class="cc-residue" data-cc-bind="residue.amount"></span> <span class="cc-residue__addon">IMP</span>
             </div>
         </div>
-        <div id="cmc" style="display: none;" class="cc-card mdc-elevation--z10 cc-cmc cc-screen--hidden">
+        <div id="referal" class="cc-card mdc-elevation--z10 cc-referal cc-exchange--hide">
                 <h3 class="cc-card__title">
-                    Bitcoin price
+                    Your referral link
                 </h3>
-                <div class="cc-exchange__block">
-                    <img class="cc-cmc__icon" src="images/btc-logo@2x.png"> 
-                    <div class="cc-cmc__graph"> </div>
-                    <div class="cc-cmc__topline">
-                        <span class="cc-cmc__pair">BTC/USD</span> 
-
-                        <svg id="cc-arrow" class="cc-arrow" width="8" height="12" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 8 12">
-                            <g transform="matrix(1,0,0,1,-609,-724)">
-                                <g><path d="M613.66667,736v-9.44667l2.39333,2.38667l0.94,-0.94l-4,-4l-4,4l0.94,0.94l2.39333,-2.38667v9.44667z" id="Path-0"/></g>
-                            </g>
-                        </svg>
-
-                        <span class="cc-cmc__change" data-cc-bind="cmc.change"></span> 
-                        <span class="cc-cmc__change__addon">%</span> 
+                <div id="referalBox" class="cc-exchange__block cc-nomargin">
+                    <div class="cc-exchange__block__inline">
+                        <div class="cc-input">
+                            <div class="cc-input__ta cc-input__ta--widthAll">
+                                <textarea data-cc-bind="referal.link" class="cc-input__value"></textarea>
+                                <div class="cc-input__back"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="cc-cmc__bottomline">
-                        <span class="cc-cmc__amount" data-cc-bind="cmc.amount"></span> <span class="cc-cmc__addon">USD</span>
+                    <div class="cc-buttons">
+                        <button class="mdc-button mdc-button--raised cc-button cc-referal__embed">embed code</button>
+                        <button class="mdc-button mdc-button--raised cc-button cc-referal__btn">copy link</button>
+                        <button class="mdc-button mdc-button--raised cc-button cc-referal__share">share</button>
                     </div>
                 </div>
         </div>
@@ -348,6 +344,30 @@
                     <button class="mdc-button mdc-button--raised cc-button cc-qrcode__btn">copy link</button>
                 </div>
             </div>
+        </div>
+        <div id="cmc" style="display: none;" class="cc-card mdc-elevation--z10 cc-cmc cc-screen--hidden">
+                <h3 class="cc-card__title">
+                    Bitcoin price
+                </h3>
+                <div class="cc-exchange__block cc-nomargin">
+                    <img class="cc-cmc__icon" src="images/btc-logo@2x.png"> 
+                    <div class="cc-cmc__graph"> </div>
+                    <div class="cc-cmc__topline">
+                        <span class="cc-cmc__pair">BTC/USD</span> 
+
+                        <svg id="cc-arrow" class="cc-arrow" width="8" height="12" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 8 12">
+                            <g transform="matrix(1,0,0,1,-609,-724)">
+                                <g><path d="M613.66667,736v-9.44667l2.39333,2.38667l0.94,-0.94l-4,-4l-4,4l0.94,0.94l2.39333,-2.38667v9.44667z" id="Path-0"/></g>
+                            </g>
+                        </svg>
+
+                        <span class="cc-cmc__change" data-cc-bind="cmc.change"></span> 
+                        <span class="cc-cmc__change__addon">%</span> 
+                    </div>
+                    <div class="cc-cmc__bottomline">
+                        <span class="cc-cmc__amount" data-cc-bind="cmc.amount"></span> <span class="cc-cmc__addon">USD</span>
+                    </div>
+                </div>
         </div>
     </div>
     <div class="cc-exchange__column">
