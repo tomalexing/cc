@@ -492,3 +492,99 @@ hr{
     left: 0;
   }
 }
+
+
+.cc-cmc{
+  position: relative;
+  transition: opacity 0.2s var(--cc-default-curve, ease-in-out);
+}
+
+.cc-cmc .cc-exchange__block{
+  margin-bottom: 0;
+}
+
+.cc-cmc__icon{
+  position: absolute;
+  top: -25px;
+  right: 0;
+  width: 30px;
+  height: 30px;
+}
+
+.cc-cmc__graph{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 105px;
+}
+
+.cc-cmc__graph img{
+  width: 100%;
+  height: auto;
+}
+
+
+.cc-cmc__topline{
+  padding-top: 4px;
+}
+.cc-cmc__bottomline{
+  padding-top: 8px;
+}
+
+.cc-cmc__pair{
+  color: #a7a4a8;
+  font-size: 11px;
+  font-weight: 300;
+  text-transform: uppercase;
+  /* Text style for "BTC/USD" */
+  letter-spacing: 0.24px;
+
+}
+
+.cc-cmc__graph{
+  filter: hue-rotate(48grad);
+}
+
+.cc-cmc__amount{
+color: #f1f1f1;
+font-size: 22px;
+font-weight: 300;
+letter-spacing: 0.28px;
+}
+
+.cc-cmc__addon{
+  color: #858585;
+  font-size: 16px;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.34px;
+}
+
+.cc-arrow {
+  padding-left: 17px;
+}
+
+.cc-arrow--up path{
+  fill: #7ac231
+}
+.cc-arrow--down{
+  transform: translateX(16px) translateY(3px) rotate(180deg);
+}
+.cc-arrow--up{
+  transform: translateY(2px);
+}
+.cc-arrow--down path{
+  fill: #d0021b
+}
+
+.cc-cmc__change,
+.cc-cmc__change__addon{
+  color: #a7a4a8;
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.24px;
+}
+
+.cc-cmc__change__addon{
+  margin-left: -2px;
+}

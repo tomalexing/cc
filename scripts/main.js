@@ -134,6 +134,8 @@ class App {
       menuD: document.querySelector('.cc-desktop-menu'),
       depositBlock: document.querySelector('#depositBlock'),
       cmc: document.querySelector('#cmc'),
+      cmcGraph: document.querySelector('.cc-cmc__graph'),
+      ccArrow: document.querySelector('.cc-arrow'),
     };
 
     this._model = {
@@ -181,8 +183,8 @@ class App {
         bitcoin: new ModelEntry('qr.bitcoin')
       },
       cmc:{
-        link: new ModelEntry('cmc.change'),
-        bitcoin: new ModelEntry('cmc.amount')
+        change: new ModelEntry('cmc.change'),
+        amount: new ModelEntry('cmc.amount')
       }
     }
 
@@ -552,12 +554,33 @@ class App {
 
     if(this._elements.cmc){
       this._fetchCMC().then(res => {
-        debugger;
         if(res.data){
-     
+          
+          cmc.amount.value = res.data.quotes['USD'].price;
+          cmc.change.value = res.data.quotes['USD'].percent_change_24h;
+
+          if( isNaN( parseFloat(cmc.change.value)) ) return 
+
+          this._elements.ccArrow.classList.add( parseFloat(cmc.change.value) > 0 ? 'cc-arrow--up' : 'cc-arrow--down');
+
+          var img = new Image();   // Create new img element
+
+          img.onload = () => {
+            this._elements.cmc.style.display = 'block';
+            // execute drawImage statements here
+            PromiseUtils.wait(400).then( _ => {
+              this._elements.cmc.style.opacity = '1';
+            });
+
+            this._elements.cmcGraph.appendChild(img);
+
+          };
+
+          img.src = 'https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/1.png'; // Set source path
+        
         }
       }, _ => {
-        debugger;
+        
       })
 
     }
@@ -571,7 +594,8 @@ class App {
    * @return {Promise} Promise for the storage success.
    */
   _fetchCMC(){
-    return PromiseUtils.get('https://widgets.coinmarketcap.com/v2/ticker/1/', {}, 2, 'GET');
+    return PromiseUtils.get('https://widgets.coinmarketcap.com/v2/ticker/1/', null, 2, 'GET');
+    // body should by null
   }
 
   /**

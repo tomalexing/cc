@@ -236,25 +236,26 @@
                 <span class="cc-residue" data-cc-bind="residue.amount"></span> <span class="cc-residue__addon">IMP</span>
             </div>
         </div>
-        <div class="cc-card mdc-elevation--z10">
+        <div id="cmc" style="display: none;" class="cc-card mdc-elevation--z10 cc-cmc cc-screen--hidden">
                 <h3 class="cc-card__title">
                     Bitcoin price
                 </h3>
-                <div id="cmc" class="cc-exchange__block cc-cmc">
+                <div class="cc-exchange__block">
                     <img class="cc-cmc__icon" src="images/btc-logo@2x.png"> 
-                    <img class="cc-cmc__graph" src="images/btc-logo@2x.png"> 
-                    <div>
+                    <div class="cc-cmc__graph"> </div>
+                    <div class="cc-cmc__topline">
                         <span class="cc-cmc__pair">BTC/USD</span> 
 
-                        <svg id="cc-arrow" class="cc-arrow--up" width="8" height="12" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 8 12">
+                        <svg id="cc-arrow" class="cc-arrow" width="8" height="12" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 8 12">
                             <g transform="matrix(1,0,0,1,-609,-724)">
-                                <g><path fill="#7ac231" d="M613.66667,736v-9.44667l2.39333,2.38667l0.94,-0.94l-4,-4l-4,4l0.94,0.94l2.39333,-2.38667v9.44667z" id="Path-0"/></g>
+                                <g><path d="M613.66667,736v-9.44667l2.39333,2.38667l0.94,-0.94l-4,-4l-4,4l0.94,0.94l2.39333,-2.38667v9.44667z" id="Path-0"/></g>
                             </g>
                         </svg>
 
                         <span class="cc-cmc__change" data-cc-bind="cmc.change"></span> 
+                        <span class="cc-cmc__change__addon">%</span> 
                     </div>
-                    <div>
+                    <div class="cc-cmc__bottomline">
                         <span class="cc-cmc__amount" data-cc-bind="cmc.amount"></span> <span class="cc-cmc__addon">USD</span>
                     </div>
                 </div>
