@@ -144,6 +144,7 @@ class App {
       referalShare: document.querySelector('.cc-referal__share'),
       referalEmbedCopyBtn: document.querySelector('.cc-copyembed__btn'),
       shareButtons: document.querySelector('.cc-shareButtons'),
+      referopenDialog: document.querySelector('#cc-refer-dialog__trigger'),
     };
 
     this._model = {
@@ -344,6 +345,11 @@ class App {
     if(this._elements.referalShare) {
       const shareDialog = new MDCDialog(document.querySelector('#cc-share-dialog'));
       this._elements.referalShare.addEventListener('click', () => shareDialog.show());
+    }
+    
+    if(this._elements.referopenDialog) {
+      const referDialog = new MDCDialog(document.querySelector('#cc-refer-dialog'));
+      this._elements.referopenDialog.addEventListener('click', () => referDialog.show());
     }
 
 
@@ -640,6 +646,10 @@ class App {
 </a>
           `;
           this._elements.referal.classList.remove('cc-exchange--hide');
+          
+          this._elements.referalBtn.removeAttribute('disabled');
+          this._elements.referalEmbed.removeAttribute('disabled');
+          this._elements.referalShare.removeAttribute('disabled');
 
         })
 

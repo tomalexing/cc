@@ -187,6 +187,14 @@
   margin-left: 16px; 
 }
 
+.cc-input__ta--smaller {
+  height: 36px;
+}
+
+.cc-input__ta--smaller .cc-input__value{
+  height: 36px !important;
+}
+
 .cc-input__ta--widthAll{
   margin-left: 0; 
 }
@@ -443,7 +451,6 @@ hr{
 
 .cc-card__tooltip-mark{
   display: inline-block;
-  font-variant: small-caps slashed-zero;
   border: 2px solid #5A6257;
   width: 15px;
   height: 15px;

@@ -66,6 +66,7 @@ textarea{
 
 .mdc-toolbar__section{
   align-items: center;
+  flex: 1 1 auto;
 }
 
 
@@ -80,6 +81,12 @@ textarea{
 .cc-toolbar__menu-icon__logo img{
     width: 100%;
     height: auto;
+}
+
+@media (max-width: 600px) {
+.cc-toolbar__menu-addon{
+  font-size: 10px;
+}
 }
 
 .cc-toolbar{
@@ -184,7 +191,8 @@ textarea{
   z-index: -1;
 }
 
-#cc-about-dialog{
+#cc-about-dialog,
+#cc-refer-dialog{
   overflow: auto;
   align-items: flex-start;
 }
