@@ -33,8 +33,8 @@ a{
   color: #7ac231;
   text-decoration: none;
 }
-ul{
-
+textarea{
+  resize: none;
 }
 
 .cc-simple-menu {
@@ -191,6 +191,10 @@ ul{
 
 .mdc-dialog__surface{
   margin: 60px 0;
+}
+
+.cc-shareBtn{
+  margin: 0 10px 10px 0px;
 }
 
 .mdc-dialog,

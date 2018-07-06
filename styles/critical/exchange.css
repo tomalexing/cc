@@ -588,3 +588,8 @@ letter-spacing: 0.28px;
 .cc-cmc__change__addon{
   margin-left: -2px;
 }
+
+
+#embedBox img{
+  max-width: 100%;
+}

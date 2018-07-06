@@ -30,7 +30,7 @@ export default class ModelEntry {
      */
     set value(val) { 
       this._value = val;
-  
+      
       for (const listener of this._listeners) {
         listener(this._value);
       }
@@ -54,6 +54,22 @@ export default class ModelEntry {
       for (let i = 0; i < this._bound.length; i++) {
         this._bound[i].textContent = this._value;
         this._bound[i].setAttribute('href',this._value);
+      }
+    }
+    /**
+     * Setter for the innerHTML of the entry.
+     * @param {*} val The value.
+     */
+    set innerHTML(val) {
+      this._value = val;
+  
+      for (const listener of this._listeners) {
+        listener(this._value);
+      }
+  
+      for (let i = 0; i < this._bound.length; i++) {
+        this._bound[i].innerHTML = '';
+        this._bound[i].insertAdjacentHTML('afterbegin', this._value);
       }
     }
 

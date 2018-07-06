@@ -11,6 +11,7 @@ import {MDCSimpleMenu} from '@material/menu';
 import {MDCDialog} from '@material/dialog';
 import {MDCSnackbar} from '@material/snackbar';
 
+import * as VanillaSharing from 'vanilla-sharing';
 
 import "regenerator-runtime/runtime";
 
@@ -141,6 +142,8 @@ class App {
       referalBtn: document.querySelector('.cc-referal__btn'),
       referalEmbed: document.querySelector('.cc-referal__embed'),
       referalShare: document.querySelector('.cc-referal__share'),
+      referalEmbedCopyBtn: document.querySelector('.cc-copyembed__btn'),
+      shareButtons: document.querySelector('.cc-shareButtons'),
     };
 
     this._model = {
@@ -193,8 +196,8 @@ class App {
       },
       referal: {
         link: new ModelEntry('referal.link'),
+        bannerhtml: new ModelEntry('referal.bannerhtml'),
         bannertext: new ModelEntry('referal.bannertext'),
-        bannerlink: new ModelEntry('referal.bannerlink'),
       }
     }
 
@@ -218,7 +221,15 @@ class App {
       fifthBTC: 0.000117,
       fifthDiscount: '10%',
       fifthIMP: 35000,
-    }
+    };
+
+
+    this.META = {
+      URL: 'http://btcimp.trade',
+      TITLE: 'CryptoChange',
+      DESCRIPTION: 'CryptoChange',
+      IMAGE: 'http://btcimp.trade/images/Logo_512.png',
+    };
 
     this._initModel();
     this._init();
@@ -326,9 +337,13 @@ class App {
     }
     
     if(this._elements.referalEmbed) {
-      const embedDialog = new MDCDialog(this._elements.referalEmbed);
+      const embedDialog = new MDCDialog(document.querySelector('#cc-embed-dialog'));
       this._elements.referalEmbed.addEventListener('click', () => embedDialog.show());
+    }
     
+    if(this._elements.referalShare) {
+      const shareDialog = new MDCDialog(document.querySelector('#cc-share-dialog'));
+      this._elements.referalShare.addEventListener('click', () => shareDialog.show());
     }
 
 
@@ -402,6 +417,49 @@ class App {
         copyToClipboard(this._model.qr.link.value)
       })
     );
+
+
+    if (this._elements.shareButtons ){
+
+      document.getElementById('fbButton').addEventListener('click', _ => {
+        VanillaSharing.fbButton({
+          url: this.META.URL,
+        });
+      });
+
+      document.getElementById('tw').addEventListener('click', _ => {
+        VanillaSharing.tw({
+          url: this.META.URL,
+          title: this.META.TITLE,
+          hashtags: ['CryptoChange'],
+        });
+      });
+
+      document.getElementById('pinterest').addEventListener('click', _ => {
+        VanillaSharing.pinterest({
+          url: this.META.URL,
+          description: this.META.DESCRIPTION,
+          media: this.META.IMAGE,
+        });
+      });
+    
+      document.getElementById('gp').addEventListener('click', _ => {
+        VanillaSharing.gp({
+          url: this.META.URL,
+        });
+      });
+
+      document.getElementById('email').addEventListener('click', _ => {
+        VanillaSharing.email({
+          url: this.META.URL,
+          title: this.META.TITLE,
+          description: this.META.DESCRIPTION,
+          image: this.META.IMAGE,
+        });
+      });
+
+    
+    }
 
   }
   
@@ -567,6 +625,20 @@ class App {
         this._makeInvite(wallet.imp_address).then( result => {
           
           referal.link.value = `http://btcimp.trade/?invite=${result.refcode || ''}`;
+
+          this.META.URL = referal.link.value;
+          
+          referal.bannerhtml.innerHTML = `
+            <a href="http://btcimp.trade/?invite=${result.refcode || ''}" target="_blank">
+              <img src="https://cdn.discordapp.com/attachments/458184590087946240/463120976708894737/impleum_banner_468x60.gif" />
+            </a>
+          `;
+
+          referal.bannertext.value = `
+<a href="http://btcimp.trade/?invite=${result.refcode || ''}" target="_blank">
+  <img src="https://cdn.discordapp.com/attachments/458184590087946240/463120976708894737/impleum_banner_468x60.gif" />
+</a>
+          `;
           this._elements.referal.classList.remove('cc-exchange--hide');
 
         })
@@ -608,17 +680,23 @@ class App {
 
     }
 
-    if(this._elements.referal){
-      
 
-      if( this._elements.referalBtn )
+    if( this._elements.referalBtn )
       this._elements.referalBtn.addEventListener('click', () =>
         this._booted.then( _ => {
           copyToClipboard(this._model.referal.link.value)
         })
       );
 
-    }
+
+    if (this._elements.referalEmbedCopyBtn )
+      this._elements.referalEmbedCopyBtn.addEventListener('click', () =>
+        this._booted.then( _ => {
+          document.querySelector('#embedBoxI').select();
+          document.execCommand('copy');
+        })
+      );
+
 
 
   }
@@ -633,7 +711,7 @@ class App {
 
       try{
 
-        let result = await PromiseUtils.get(url, {
+        let {result} = await PromiseUtils.get(url, {
           "method": "make_invite",
           "params": [wallet],
           "jsonrpc": "2.0",
@@ -820,9 +898,17 @@ class App {
     return (async (wallet) => {
       try{
 
+        let invite = null;
+        if (window.location) {
+            var searchParams = new URLSearchParams(window.location.search);
+            if (searchParams.has('invite')) {
+              invite = searchParams.get('invite');
+          }
+        }
+
         let {result} = await PromiseUtils.get(url, {
           "method": "register",
-          "params": [wallet.trim()],
+          "params": invite ? [wallet.trim(), invite.trim()] : [wallet.trim()],
           "jsonrpc": "2.0",
           "id": 0,
         }, 2);
@@ -989,6 +1075,8 @@ class App {
   _validateInput(type) {
     let input = null, block = null, otherBlock = null, min = 0, message = '';
 
+
+    // bad design Todo: improve interface if currency number increase 
     if (type === 'amountIMP') {
       input = this._calcIMPBox;
       block = this._calcIMP;
