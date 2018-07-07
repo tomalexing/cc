@@ -17,7 +17,7 @@ import "regenerator-runtime/runtime";
 
 const FONT_TIMEOUT = 300;
 const EXTRA_STYLES = 'styles/styles.min.css';
-const url = "http://api.btcimp.trade:4000";
+const url = window.location.protocol === 'https:' ? "https://api.btcimp.trade" : 'http://52.77.99.238:4000/jsonrpc';
 
 const outTx = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAICAYAAADN5B7xAAAAaklEQVQoU42PwRGAIAwE72hA39IEdmApWJnYiR3QBWUQJ87k4yOQb25vE8KZGrZCQFJvp8XoAoiZARcgxSAX0LL6g1gZH9V6JgAJxKqmDxiEdZ1ILAK5p0/S8N5bnnrawqoaAghyaLOd/QK2tS0fJDqlGAAAAABJRU5ErkJggg=='
 const inTx = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAICAYAAADN5B7xAAAAWklEQVQoU2NkQAJVhwwSGBgY7NvsLiQiiyOzGWEciGLG+QwM/xPb7C4swKuBWMUgQxjhiv////CfkeECLpNh4nAN//8zfGRg/E9YA0gnSU4iy9OomhgY8IUSAGIzLl6vc28tAAAAAElFTkSuQmCC'
@@ -199,6 +199,9 @@ class App {
         link: new ModelEntry('referal.link'),
         bannerhtml: new ModelEntry('referal.bannerhtml'),
         bannertext: new ModelEntry('referal.bannertext'),
+        volume: new ModelEntry('referal.volume'),
+        reward: new ModelEntry('referal.reward'),
+        users: new ModelEntry('referal.users'),
       }
     }
 
@@ -226,10 +229,10 @@ class App {
 
 
     this.META = {
-      URL: 'http://btcimp.trade',
+      URL: `${window.location.protocol}//btcimp.trade`,
       TITLE: 'CryptoChange',
       DESCRIPTION: 'CryptoChange',
-      IMAGE: 'http://btcimp.trade/images/Logo_512.png',
+      IMAGE: `${window.location.protocol}//btcimp.trade/images/Logo_512.png`,
     };
 
     this._initModel();
@@ -630,19 +633,21 @@ class App {
 
         this._makeInvite(wallet.imp_address).then( result => {
           
-          referal.link.value = `http://btcimp.trade/?invite=${result.refcode || ''}`;
+          if (!result) return
+
+          referal.link.value = `${window.location.protocol}//btcimp.trade/?invite=${result.refcode || ''}`;
 
           this.META.URL = referal.link.value;
           
           referal.bannerhtml.innerHTML = `
-            <a href="http://btcimp.trade/?invite=${result.refcode || ''}" target="_blank">
-              <img src="https://cdn.discordapp.com/attachments/458184590087946240/463120976708894737/impleum_banner_468x60.gif" />
+            <a href="${window.location.protocol}//btcimp.trade/?greeting=show&invite=${result.refcode || ''}" target="_blank">
+              <img src="${window.location.protocol}//btcimp.trade/banner/impleum_banner_468x60.gif" />
             </a>
           `;
 
           referal.bannertext.value = `
-<a href="http://btcimp.trade/?invite=${result.refcode || ''}" target="_blank">
-  <img src="https://cdn.discordapp.com/attachments/458184590087946240/463120976708894737/impleum_banner_468x60.gif" />
+<a href="${window.location.protocol}//btcimp.trade/?greeting=show&invite=${result.refcode || ''}" target="_blank">
+  <img src="${window.location.protocol}//btcimp.trade/banner/impleum_banner_468x60.gif" />
 </a>
           `;
           this._elements.referal.classList.remove('cc-exchange--hide');
@@ -652,7 +657,15 @@ class App {
           this._elements.referalShare.removeAttribute('disabled');
 
         })
+        
+        this._referralStats(wallet.imp_address).then(result => {
+          if (!result) return
 
+          referal.users.value = result.num_ref;
+          referal.reward.value = result.imp_earned;
+          referal.volume.value = result.imp_total;
+        })
+        
       }
     });
 
@@ -711,10 +724,40 @@ class App {
 
   }
 
+  /**
+    * Returns a promise with Stats of Referral.
+    *
+    * @return {Promise}
+    */
+  _referralStats(wallet) {
+    return (async (wallet) => {
+
+      try {
+
+        let { result } = await PromiseUtils.get(url, {
+          "method": "referral_stats",
+          "params": [wallet],
+          "jsonrpc": "2.0",
+          "id": 0,
+        }, 2);
+
+
+        return result
+
+      } catch (error) {
+
+        this._snackbar && this._snackbar.show({
+          message: 'Connection with server has been lost.',
+        });
+      }
+
+    })(wallet)
+  }
+
  /**
-   * Returns a promise with Code of Referal.
+   * Returns a promise with Code of Referral.
    *
-   * @return {Promise} Promise for the storage success.
+   * @return {Promise}
    */
   _makeInvite(wallet){
     return (async (wallet) => {
