@@ -17,7 +17,7 @@ import "regenerator-runtime/runtime";
 
 const FONT_TIMEOUT = 300;
 const EXTRA_STYLES = 'styles/styles.min.css';
-const url = window.location.protocol === 'https:' ? "https://api.btcimp.trade" : 'http://52.77.99.238:4000/jsonrpc';
+const url = "https://api.btcimp.trade";
 
 const outTx = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAICAYAAADN5B7xAAAAaklEQVQoU42PwRGAIAwE72hA39IEdmApWJnYiR3QBWUQJ87k4yOQb25vE8KZGrZCQFJvp8XoAoiZARcgxSAX0LL6g1gZH9V6JgAJxKqmDxiEdZ1ILAK5p0/S8N5bnnrawqoaAghyaLOd/QK2tS0fJDqlGAAAAABJRU5ErkJggg=='
 const inTx = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAICAYAAADN5B7xAAAAWklEQVQoU2NkQAJVhwwSGBgY7NvsLiQiiyOzGWEciGLG+QwM/xPb7C4swKuBWMUgQxjhiv////CfkeECLpNh4nAN//8zfGRg/E9YA0gnSU4iy9OomhgY8IUSAGIzLl6vc28tAAAAAElFTkSuQmCC'
@@ -136,13 +136,16 @@ class App {
       depositBlock: document.querySelector('#depositBlock'),
       cmc: document.querySelector('#cmc'),
       cmcGraph: document.querySelector('.cc-cmc__graph'),
+      cmcGraph2: document.querySelector('.cc-cmc__graph2'),
       ccArrow: document.querySelector('.cc-arrow'),
+      ccArrow2: document.querySelector('.cc-arrow2'),
       referal: document.querySelector('#referal'),
       referalBox: document.querySelector('#referalBox'),
       referalBtn: document.querySelector('.cc-referal__btn'),
       referalEmbed: document.querySelector('.cc-referal__embed'),
       referalShare: document.querySelector('.cc-referal__share'),
       referalEmbedCopyBtn: document.querySelector('.cc-copyembed__btn'),
+      referalEmbedCopyBtn2: document.querySelector('.cc-copyembed__btn2'),
       shareButtons: document.querySelector('.cc-shareButtons'),
       referopenDialog: document.querySelector('#cc-refer-dialog__trigger'),
     };
@@ -193,12 +196,16 @@ class App {
       },
       cmc:{
         change: new ModelEntry('cmc.change'),
-        amount: new ModelEntry('cmc.amount')
+        amount: new ModelEntry('cmc.amount'),
+        change2: new ModelEntry('cmc.change2'),
+        amount2: new ModelEntry('cmc.amount2')
       },
       referal: {
         link: new ModelEntry('referal.link'),
         bannerhtml: new ModelEntry('referal.bannerhtml'),
+        bannerhtml2: new ModelEntry('referal.bannerhtml2'),
         bannertext: new ModelEntry('referal.bannertext'),
+        bannertext2: new ModelEntry('referal.bannertext2'),
         volume: new ModelEntry('referal.volume'),
         reward: new ModelEntry('referal.reward'),
         users: new ModelEntry('referal.users'),
@@ -229,10 +236,10 @@ class App {
 
 
     this.META = {
-      URL: `${window.location.protocol}//btcimp.trade`,
+      URL: `//btcimp.trade`,
       TITLE: 'CryptoChange',
       DESCRIPTION: 'CryptoChange',
-      IMAGE: `${window.location.protocol}//btcimp.trade/images/Logo_512.png`,
+      IMAGE: `//btcimp.trade/images/Logo_512.png`,
     };
 
     this._initModel();
@@ -635,27 +642,85 @@ class App {
           
           if (!result) return
 
-          referal.link.value = `${window.location.protocol}//btcimp.trade/?invite=${result.refcode || ''}`;
+          referal.link.value = `//btcimp.trade/?invite=${result.refcode || ''}`;
+
 
           this.META.URL = referal.link.value;
           
+        
+
           referal.bannerhtml.innerHTML = `
-            <a href="${window.location.protocol}//btcimp.trade/?greeting=show&invite=${result.refcode || ''}" target="_blank">
-              <img src="${window.location.protocol}//btcimp.trade/banner/impleum_banner_468x60.gif" />
+            <a href="//btcimp.trade/?greeting=show&invite=${result.refcode || ''}" target="_blank">
+              <img src="//btcimp.trade/banner/impleum_banner_468x60.gif" />
             </a>
           `;
 
+          referal.bannerhtml2.innerHTML = `
+            <iframe src="https://btcimp.trade/calc.html" width="342px" height="200px" frameborder="0"><span data-mce-type="bookmark" style="display: inline-block; width: 0px; 
+            overflow: hidden; line-height: 0;" class="mce_SELRES_start"></span><span data-mce-type="bookmark" style="display: inline-block; width: 0px; overflow: hidden; 
+            line-height: 0;" class="mce_SELRES_start"></span><span data-mce-type="bookmark" style="display: inline-block; width: 0px; overflow: hidden; line-height: 0;" 
+            class="mce_SELRES_start"></span><span data-mce-type="bookmark" style="display: inline-block; width: 0px; overflow: hidden; line-height: 0;" class="mce_SELRES_start"></span>
+            <span data-mce-type="bookmark" style="display: inline-block; width: 0px; overflow: hidden; line-height: 0;" class="mce_SELRES_start"></span><span data-mce-type="bookmark" 
+            style="display: inline-block; width: 0px; overflow: hidden; line-height: 0;" class="mce_SELRES_start"></span></iframe>
+            <a style="position: absolute;
+            margin: 24px 0px 0px 112px;
+            border-radius: 14px;
+            border: 2px solid #3f4048;
+            /* height: 23px; */
+            color: white;
+            background: #2a2b31;
+            /* line-height: 18px; */
+            /* align-items: center; */
+            font-size: 12px;
+            font-weight: 300;
+            text-transform: lowercase;
+            letter-spacing: 0.3px;
+            padding-left: 16px;
+            padding-right: 16px;
+            vertical-align: center;
+            padding-bottom: -1px;
+            transition: border-color 0.2s var(--cc-default-curve, ease-in-out);" target="_blank" href="//btcimp.trade/?greeting=show&invite=${result.refcode || ''}"  
+            onmouseover="this.style.border='#7ac231 2px solid';" onmouseout="this.style.border='#3f4048 2px solid';" id="calc_buy_imp">buy imp</a>
+            `;
+          
           referal.bannertext.value = `
-<a href="${window.location.protocol}//btcimp.trade/?greeting=show&invite=${result.refcode || ''}" target="_blank">
-  <img src="${window.location.protocol}//btcimp.trade/banner/impleum_banner_468x60.gif" />
+<a href="//btcimp.trade/?greeting=show&invite=${result.refcode || ''}" target="_blank">
+  <img src="//btcimp.trade/banner/impleum_banner_468x60.gif" />
 </a>
           `;
+
+          referal.bannertext2.value = `
+          <iframe src="https://btcimp.trade/calc.html" width="342px" height="200px" frameborder="0"><span data-mce-type="bookmark" style="display: inline-block; width: 0px; 
+          overflow: hidden; line-height: 0;" class="mce_SELRES_start"></span><span data-mce-type="bookmark" style="display: inline-block; width: 0px; overflow: hidden; 
+          line-height: 0;" class="mce_SELRES_start"></span><span data-mce-type="bookmark" style="display: inline-block; width: 0px; overflow: hidden; line-height: 0;" 
+          class="mce_SELRES_start"></span><span data-mce-type="bookmark" style="display: inline-block; width: 0px; overflow: hidden; line-height: 0;" class="mce_SELRES_start"></span>
+          <span data-mce-type="bookmark" style="display: inline-block; width: 0px; overflow: hidden; line-height: 0;" class="mce_SELRES_start"></span><span data-mce-type="bookmark" 
+          style="display: inline-block; width: 0px; overflow: hidden; line-height: 0;" class="mce_SELRES_start"></span></iframe>
+          <a style="position: absolute;
+          margin: 24px 0px 0px 112px;
+          border-radius: 14px;
+          border: 2px solid #3f4048;
+          color: white;
+          background: #2a2b31;
+          font-size: 12px;
+          font-weight: 300;
+          text-transform: lowercase;
+          letter-spacing: 0.3px;
+          padding-left: 16px;
+          padding-right: 16px;
+          vertical-align: center;
+          padding-bottom: -1px;
+          transition: border-color 0.2s var(--cc-default-curve, ease-in-out);" target="_blank" href="//btcimp.trade/?greeting=show&invite=${result.refcode || ''}"  
+          onmouseover="this.style.border='#7ac231 2px solid';" onmouseout="this.style.border='#3f4048 2px solid';">buy imp</a>
+          `;
+            
+          
+
           this._elements.referal.classList.remove('cc-exchange--hide');
           
           this._elements.referalBtn.removeAttribute('disabled');
           this._elements.referalEmbed.removeAttribute('disabled');
           this._elements.referalShare.removeAttribute('disabled');
-
         })
         
         this._referralStats(wallet.imp_address).then(result => {
@@ -702,7 +767,40 @@ class App {
       })
 
     }
+////////\\\\\\///////\\\\\\//////\\\\\\/////////\\\\\\\\\//////\\\\\\\\\\\\\\\\///////\\\\\\\\\\///////\////
+    if(this._elements.cmc){
+      this._fetchCMC().then(res => {
+        if(res.data){
+          
+          cmc.amount2.value = (0.00013 * res.data.quotes['USD'].price).toFixed(5);
+          cmc.change2.value = res.data.quotes['USD'].percent_change_24h;
 
+          if( isNaN( parseFloat(cmc.change2.value)) ) return 
+
+          this._elements.ccArrow2.classList.add( parseFloat(cmc.change2.value) > 0 ? 'cc-arrow--up2' : 'cc-arrow--down2');
+
+          var img2 = new Image();   // Create new img element
+
+          img2.onload = () => {
+            this._elements.cmc.style.display = 'block';
+            // execute drawImage statements here
+            PromiseUtils.wait(400).then( _ => {
+              this._elements.cmc.style.opacity = '1';
+            });
+
+            this._elements.cmcGraph2.appendChild(img2);
+
+          };
+
+          img2.src = 'https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/1.png'; // Set source path
+        
+        }
+      }, _ => {
+        
+      })
+
+    }
+    
 
     if( this._elements.referalBtn )
       this._elements.referalBtn.addEventListener('click', () =>
@@ -720,7 +818,13 @@ class App {
         })
       );
 
-
+      if (this._elements.referalEmbedCopyBtn2 )
+      this._elements.referalEmbedCopyBtn2.addEventListener('click', () =>
+        this._booted.then( _ => {
+          document.querySelector('#embedBoxI2').select();
+          document.execCommand('copy');
+        })
+      );
 
   }
 

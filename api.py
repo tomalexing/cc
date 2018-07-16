@@ -1,7 +1,7 @@
 import requests
 import json
 
-url = "http://52.77.99.238:4000/jsonrpc"
+url = "https://api.btcimp.trade"
 headers = {'content-type': 'application/json'}
 
 def main():

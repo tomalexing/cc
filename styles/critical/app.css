@@ -29,6 +29,10 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
+input::placeholder {
+  color: #858585 !important;
+}
+
 a{
   color: #7ac231;
   text-decoration: none;
@@ -211,6 +215,10 @@ textarea{
   color: var(--cc-text-white, #f1f1f1) !important;
 }
 
+.mdc-dialog--open .mdc-dialog__backdrop {
+  opacity: 0.9 !important;
+}
+
 .mdc-dialog .mdc-dialog__footer .mdc-dialog__footer__button::before {
-    background-color: rgba(0, 174, 158, 0.16);
+  background-color: rgba(0, 0, 0, 0.9) !important;
   }

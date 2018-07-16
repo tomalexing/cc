@@ -33,10 +33,11 @@
   border-radius: 2px;
   overflow: hidden;
   margin: 15px;
+  margin-top: 24px;
   max-width: 360px;
   width: auto;
   background-color: #1d2024;
-  padding: 25px 20px;
+  padding: 16px 18px 26px;
   color: var(--cc-text-white, #f1f1f1);
 }
 
@@ -47,6 +48,8 @@
   font-weight: 300;
   text-transform: uppercase;
   letter-spacing: 0.41px;
+  top: 2.5px;
+  left: 2px;
 }
  
 .cc-prices-table{
@@ -78,7 +81,7 @@
 
 .cc-residue{
   color: var(--cc-text-white, #f1f1f1);
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 300;
   text-transform: uppercase;
 }
@@ -114,7 +117,6 @@
   display: flex;
   flex-direction: column;
   background-color: transparent;
-  margin-bottom: 20px;
 }
 
 .cc-calc__eq{
@@ -130,8 +132,16 @@
   margin-bottom: 22px
 }
 
+.cc-exchange__block__inline_info {
+  display: flex;
+  position: relative;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-right: 82px;
+}
+
 .cc-exchange__block__inline > .cc-input{
-  margin-bottom: 0px
+  margin-bottom: 20px
 }
 
 .cc-input__back{
@@ -159,7 +169,11 @@
   font-weight: 300;
   letter-spacing: 0.3px;
 }
-
+.cc-background{
+background-color: #2a2b31;
+padding: 20px;
+border-radius: 2px;
+}
 .cc-input {
   display: flex;
   width: 100%;
@@ -330,7 +344,7 @@
 }
 
 #history.cc-exchange__block{
-  margin-bottom: 0;
+  margin-bottom: 0px;
 }
 
 .cc-history-block{
@@ -437,8 +451,10 @@ hr{
 }
 
 .cc-card__link {
-  color: #7ac231;
   text-decoration: none;
+  color: #ffffff;
+  font-size: 11px;
+  margin-left: 12px;
 }
 
 .cc-card__tooltip{
@@ -447,6 +463,8 @@ hr{
  display: inline-block; 
  height: 20px;
  z-index: 50;
+ text-align: center;
+font-size: 12px;
 }
 
 .cc-card__tooltip-mark{
@@ -457,6 +475,8 @@ hr{
   text-align: center;
   text-transform: lowercase;
   border-radius: 50%;
+font-size: 12px;
+
 }
 
 .cc-card__tooltip:hover .cc-card__tooltip-popup__cover{
@@ -472,7 +492,7 @@ hr{
   padding-bottom: 10px;
   z-index: 10;
   bottom: 15px;
-  right: -6px;
+  left: -6px;
   overflow: hidden;
   width: 205px;
   
@@ -512,8 +532,14 @@ hr{
 
 .cc-cmc__icon{
   position: absolute;
-  top: -25px;
-  right: 0;
+  top: 12.5px;
+  width: 30px;
+  height: 30px;
+}
+
+.cc-cmc__icon2{
+  position: absolute;
+  top: 5.8px;
   width: 30px;
   height: 30px;
 }
@@ -530,12 +556,33 @@ hr{
   height: auto;
 }
 
+.cc-cmc__graph2{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 105px;
+}
+
+.cc-cmc__graph2 img{
+  width: 100%;
+  height: auto;
+}
+
 
 .cc-cmc__topline{
-  padding-top: 4px;
+  margin-left: 50px;
+  margin-top: -2px;
+
 }
+
+.cc-cmc__topline2{
+  margin-left: 50px;
+  margin-top: 15px;
+}
+
 .cc-cmc__bottomline{
-  padding-top: 8px;
+  margin-left: 50px;
+  padding-top: 4px;
 }
 
 .cc-cmc__pair{
@@ -545,16 +592,21 @@ hr{
   text-transform: uppercase;
   /* Text style for "BTC/USD" */
   letter-spacing: 0.24px;
-
+left: 7.6px;
+top: 5.8px;
 }
 
 .cc-cmc__graph{
   filter: hue-rotate(48grad);
 }
 
+.cc-cmc__graph2{
+  filter: hue-rotate(48grad);
+}
+
 .cc-cmc__amount{
 color: #f1f1f1;
-font-size: 22px;
+font-size: 16px;
 font-weight: 300;
 letter-spacing: 0.28px;
 }
@@ -581,6 +633,24 @@ letter-spacing: 0.28px;
   transform: translateY(2px);
 }
 .cc-arrow--down path{
+  fill: #d0021b
+}
+
+
+.cc-arrow2 {
+  padding-left: 17px;
+}
+
+.cc-arrow--up2 path{
+  fill: #7ac231
+}
+.cc-arrow--down2{
+  transform: translateX(16px) translateY(3px) rotate(180deg);
+}
+.cc-arrow--up2{
+  transform: translateY(2px);
+}
+.cc-arrow--down2 path{
   fill: #d0021b
 }
 
