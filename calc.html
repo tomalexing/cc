@@ -34,6 +34,9 @@
 
   <link rel=icon href=favicon.png sizes="16x16" type="image/png">
 
+    <!--[if IE]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.4/bluebird.min.js"></script>
+    <![endif]-->
 
   <!-- Critical styles -->
   <!-- {% include critical css %} -->
@@ -52,7 +55,7 @@
                 <div class="cc-exchange__block__inline">
                     <div id="calc-BTC" class="cc-input">
                         <div class="cc-input__vc">
-                            <input type="number" min="0" step="any" class="cc-input__value" placeholder="" aria-label="BTC coin amount"></input>
+                            <input type="number" min="0" step="any" class="cc-input__value placeholder-color" placeholder="" aria-label="BTC coin amount"></input>
                             <div class="cc-input__back"></div>
                             <div class="cc-input__label">BTC</div>
                         </div>
@@ -62,18 +65,18 @@
 
                     <div id="calc-IMP" class="cc-input">
                             <div class="cc-input__vc">
-                                <input type="number" min="0" step="any" class="cc-input__value" placeholder="" aria-label="IMP coin amount"></input>
+                                <input type="number" min="0" step="any" class="cc-input__value placeholder-color" placeholder="" aria-label="IMP coin amount"></input>
                                 <div class="cc-input__back"></div>
                                 <div class="cc-input__label">IMP</div>
                             </div>
                     </div>
                     <div class="cc-calc-error cc-input__error" aria-hidden="true">
-                            <span class="cc-input__error-message cc-input__error-message__calc cc-input__error-message--correctTop">Please enter a valid number.</span>
+                            <span class="cc-input__error-message cc-input__error-message__calc">Please enter a valid number.</span>
                     </div>
                 </div>
-                <!-- <div class="cc-buttons">
+                <div class="cc-buttons">
                     <a class="mdc-button mdc-button--raised cc-button" target="_blank" href="//btcimp.trade/" id="calc_buy_imp">buy imp</a>
-                </div> -->
+                </div>
                 
             </div>
 

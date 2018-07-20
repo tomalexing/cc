@@ -37,7 +37,6 @@
 
   <link rel=icon href=favicon.png sizes="16x16" type="image/png">
 
-
     <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-116769291-3"></script>
   <script>
@@ -87,7 +86,7 @@
   <header class="cc-toolbar mdc-toolbar mdc-elevation--z4 cc-toolbar">
     <div class="mdc-toolbar__row">
         <section class="cc-toolbar__appname mdc-toolbar__section mdc-toolbar__section--align-start">
-          <a class="material-icons mdc-toolbar__menu-icon cc-toolbar__menu-icon__logo" aria-label="Logo" alt="Logo">
+          <a class="material-icons mdc-toolbar__menu-icon cc-toolbar__menu-icon__logo сс-menu__logo" aria-label="Logo" alt="Logo">
             <img alt="Logo" src="images/Logo_144.png">
           </a>
           <p class="cc-toolbar__menu-addon">CryptoChange - Official Impleum Partner</p>
@@ -110,6 +109,9 @@
                     </li>
                     <li class="mdc-list-item сс-menu__greeting" role="menuitem" tabindex="0">
                             About Impleum
+                    </li>
+                    <li class="mdc-list-item сс-menu__logo" role="menuitem" tabindex="0">
+                            About CryptoChange
                     </li>
                 </ul>
             </div>
@@ -134,6 +136,9 @@
                   <li class="mdc-list-item сс-menu__greeting" role="menuitem" tabindex="0">
                         About Impleum
                   </li>
+                  <li class="mdc-list-item сс-menu__logo" role="menuitem" tabindex="0">
+                        About CryptoChange
+                  </li>
                 </ul>
               </div>
             </div>
@@ -148,8 +153,6 @@
                     <h3 class="cc-card__title">
                         Price
                     </h3>
-
-                    <!-- here added impleum block -->
                     <div class="cc-exchange__block cc-nomargin">
                         <img class="cc-cmc__icon2" src="images/Group3@2x.png"> 
                         <div class="cc-cmc__graph2"> </div>
@@ -169,7 +172,6 @@
                             <span class="cc-cmc__amount" data-cc-bind="cmc.amount2"></span> <span class="cc-cmc__addon">USD</span>
                         </div>
                     </div>
-                    <!-- here added impleum block -->
 
                     <div class="cc-exchange__block cc-nomargin">
                         <img class="cc-cmc__icon"  style="margin-top: 10PX;" src="images/btc-logo@2x.png"> 
@@ -191,9 +193,7 @@
                         </div>
                     </div>
             </div>
-            <!--/////////////////////-->
-                    
-            <!--/////////////////////-->
+
             <div class="cc-card mdc-elevation--z10">
                     <h3 class="cc-card__title">
                             IMP Price and Amount
@@ -279,7 +279,7 @@
                 </div>
         <div class="cc-card mdc-elevation--z10">
             <h3 class="cc-card__title">
-                Amount Available with current discount
+                Amount Available with current discount (<span id="residue-percentage"></span>)
             </h3>
             <div>
                 <span class="cc-residue" data-cc-bind="residue.amount"></span> <span class="cc-residue__addon">IMP</span>
@@ -297,7 +297,7 @@
                 <div class="cc-exchange__block__inline">
                     <div id="calc-BTC" class="cc-input">
                         <div class="cc-input__vc">
-                            <input type="number" min="0" step="any" class="cc-input__value" placeholder="" aria-label="BTC coin amount"></input>
+                            <input type="number" min="0" step="any" class="cc-input__value placeholder-color" placeholder="" aria-label="BTC coin amount"></input>
                             <div class="cc-input__back"></div>
                             <div class="cc-input__label">BTC</div>
 
@@ -308,7 +308,7 @@
 
                     <div id="calc-IMP" class="cc-input">
                             <div class="cc-input__vc">
-                                <input type="number" min="0" step="any" class="cc-input__value" placeholder="" aria-label="IMP coin amount"></input>
+                                <input type="number" min="0" step="any" class="cc-input__value placeholder-color" placeholder="" aria-label="IMP coin amount"></input>
                                 <div class="cc-input__back"></div>
                                 <div class="cc-input__label">IMP</div>
                             </div>
@@ -326,7 +326,7 @@
                 <div class="cc-exchange__block__inline">
                     <div class="cc-input cc-input--width">
                         <div class="cc-input__vc">
-                            <form class="cc-register__form"><input class="cc-input__value " placeholder="Please paste here your impleum wallet address" aria-label="IMP address"></input>
+                            <form class="cc-register__form"><input class="cc-input__value" placeholder="Please paste here your impleum wallet address" aria-label="IMP address"></input>
                             <div class="cc-input__back"></div>
                         </div>
                         <div class="cc-register-error cc-input__error" aria-hidden="true">
@@ -338,14 +338,12 @@
                 
                 
                 <div class="cc-buttons">
-                        <div class="cc-exchange__block__inline_info" style="margin-left: -200px">
-                                <span class="cc-card__tooltip" onclick="void(0)"><span class="cc-card__tooltip-mark">i</span><span class="cc-card__tooltip-popup__cover"><a class="cc-card__tooltip-popup" href="https://impleum.com/wallet" target="_blank">Get your impleum wallet by link</a></span></span>
-                                <a class="cc-card__link" target="_blank" href="https://impleum.com/wallet">Get impleum wallet </a><a class="cc-card__link" style="color: #7ac231; margin-left: 5px" target="_blank" href="https://impleum.com/wallet"> here</a>
-                <!-- letter i to fix -->
-        
-                        </div>
+                    <div class="cc-buttons__tooltip" >
+                            <span class="cc-card__tooltip" onclick="void(0)"><span class="cc-card__tooltip-mark">i</span><span class="cc-card__tooltip-popup__cover"><a class="cc-card__tooltip-popup" href="https://impleum.com/wallet" target="_blank">Get your impleum wallet by link</a></span></span>
+                            <a class="cc-card__link" target="_blank" href="https://impleum.com/wallet">Get impleum wallet here</a>        
+                    </div>
                     <button class="mdc-button mdc-button--raised cc-button cc-edit__btn cc-btn--hidden" >edit</button>
-                    <button class="mdc-button mdc-button--raised cc-button cc-register__btn" style="border: #7ac231 2px solid">submit</button>
+                    <button class="mdc-button mdc-button--raised cc-button cc-register__btn" >submit</button>
                 </div>
             </div>
             <div id="depositBlock" class="cc-exchange--hide">
@@ -375,7 +373,7 @@
                     <div class="cc-input">
                         <div class="cc-input__ta">
                             <a data-cc-bind="qr.link" target="_blank" class="cc-input__value"></a>
-                            <div class="cc-input__back"></div>
+                            <div class="cc-input__back" ></div>
                         </div>
                     </div>
                 </div>
@@ -385,16 +383,15 @@
                 </div>
             </div>
         </div>
-        <!-- letter i to fix -->
         <div id="referal" class="cc-card mdc-elevation--z10 cc-referal">
             <h3 class="cc-card__title">
-                YOUR REFERRAL LINK: <span  style="margin-left: 8px" id="cc-refer-dialog__trigger" class="cc-card__tooltip" ><span class="cc-card__tooltip-mark" style="text-align: center">i</span></span>
+                YOUR REFERRAL LINK: <span   id="cc-refer-dialog__trigger" class="cc-card__tooltip" ><span class="cc-card__tooltip-mark" >i</span></span>
             </h3>
             <div id="referalBox" class="cc-exchange__block">
                 <div class="cc-exchange__block__inline">
                     <div class="cc-input">
                         <div class="cc-input__ta cc-input__ta--widthAll cc-input__ta--smaller">
-                            <textarea readonly="readonly" data-cc-bind="referal.link" class="cc-input__value" style="color: #858585">To get a ref link, register your impleum wallet</textarea>
+                            <textarea readonly="readonly" data-cc-bind="referal.link" class="cc-input__value" >To get a ref link, register your impleum wallet</textarea>
                             <div class="cc-input__back"></div>
                         </div>
                     </div>
@@ -456,7 +453,7 @@
             </h3>
             <div class="cc-exchange__block">
                 <div class="cc-exchange__block-in">   
-                    The financial services provided by this website carry a high level of risk and can result in the loss of all your funds. You should never invest money that you cannot afford to lose.
+                        The financial services provided by this website carry a high level of risk and can result in the loss of all your invested funds. You should never invest money that you cannot afford to lose.
                 </div>
             </div>
         </div>
@@ -541,13 +538,13 @@
         </header>
         <section  class="mdc-dialog__body">
             <div id="embedBox" class="cc-exchange__block cc-nomargin">
-                    <h3>Interactive banner</h3>
+                <h3>Interactive banner</h3>
                 <div class="cc-exchange__block__inline" data-cc-bind="referal.bannerhtml"></div>
                 <div class="cc-exchange__block__inline">
-                    <div class="cc-input">
+                    <div class="cc-input cc-popup__input">
                         <div class="cc-input__ta cc-input__ta--widthAll">
                             <textarea readonly="readonly" id="embedBoxI" data-cc-bind="referal.bannertext" class="cc-input__value"></textarea>
-                            <div class="cc-input__back"></div>
+                            <div  class="cc-input__back"></div>
                         </div>
                     </div>
                 </div>
@@ -555,12 +552,18 @@
                     <button class="mdc-button mdc-button--raised cc-button cc-copyembed__btn">copy</button>
                 </div>
                 <h3>BTC/IMP Calculator</h3>
-                <div class="cc-exchange__block__inline" id="calc_img" data-cc-bind="referal.bannerhtml2"></div>
-                <div class="cc-exchange__block__inline">
-                    <div class="cc-input">
-                        <div class="cc-input__ta cc-input__ta--widthAll">
-                            <textarea readonly="readonly" id="embedBoxI2" data-cc-bind="referal.bannertext2" class="cc-input__value"></textarea>
-                            <div class="cc-input__back"></div>
+                <div class="cc-popup__grid"> 
+                    <div class="cc-popup__col">
+                        <div class="cc-exchange__block__inline" data-cc-bind="referal.bannerhtml2"></div>
+                    </div>
+                    <div class="cc-popup__col">
+                        <div class="cc-exchange__block__inline">
+                            <div class="cc-input">
+                                <div class="cc-input__ta cc-input__ta--widthAll">
+                                    <textarea readonly="readonly" id="embedBoxI2" data-cc-bind="referal.bannertext2" class="cc-input__value"></textarea>
+                                    <div class="cc-input__back"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -626,7 +629,7 @@
             <p>Impleum advantages:</p>
             <ol>
                 <li>
-                        The core of the team is specialists in the areas of blockchain and programming. 
+                        The team's core consists of specialists in the area of blockchain and programming. 
                 </li>
                 <li>
                         Low reward for PoS. A limited and fairly small total supply of 100 million coins indicates that there will be no hyperinflation.
@@ -650,12 +653,12 @@
             
              
             </ol>
-            <p>All of the above indicates the huge potential of the Impleum project and gives reasons to believe that after entering the stock exchange IMP is waiting for a rapid takeoff prices. The IMP coin is scheduled for the end of the 2nd, beginning of the 3rd quarter of 2018.
-                    How to buy IMP now?</p>
+            <p>All of the above indicates the huge potential of the Impleum project and gives reasons to believe that after entering the stock exchange, IMP will see a rapid growth in price. The IMP coin listing is scheduled for the 3rd quarter of 2018.</p>
+            <h3>How to buy IMP now? </h3>
             <p>You can buy IMP on the service BTCIMP.trade. To do this you need:</p>
             <ol>
-                <li>Register the address of your IMP wallet. The service automatically generates the BTC wallet address for the deposit.</li>
-                <li>Send the required amount of BTC into the wallet address. IMP coins will be sent to a previously registered Impleum wallet address after confirmation of the transaction. The notice of purchase will come in History module.</li>
+                <li>Register the address of your <a href="https://impleum.com/wallet/" target="_blank">IMP wallet</a>. The service automatically generates the BTC wallet address for the deposit.</li>
+                <li>Send the required amount of BTC into the wallet address. IMP coins will be sent to a previously registered Impleum wallet address after confirmation of the transaction. The notice of purchase will appear in your History module.</li>
             </ol>
 
             <p>Resources:</p>
@@ -674,6 +677,54 @@
     </div>
     <div class="mdc-dialog__backdrop"></div>
   </aside>
+
+  <aside  id="cc-logo-dialog"
+    class="mdc-dialog"
+    role="alertdialog"
+    aria-hidden="true"
+    aria-labelledby="cc-logo-dialog-label"
+    aria-describedby="cc-logo-dialog-description">
+
+    <div class="mdc-dialog__surface">
+            <header class="mdc-dialog__header">
+              <h2 id="cc-logo-dialog-label" class="mdc-dialog__header__title">
+                    ABOUT CRYPTOCHANGE
+              </h2>
+              <button type="button" class="mdc-button mdc-button--dense mdc-dialog__footer__button mdc-dialog__footer__button--accept"><img class="cc-close__icon" src='images/close.png'/></button>
+            </header>
+            <section id="cc-logo-dialog-description" class="mdc-dialog__body">
+                    
+                <div class="cc-popup__grid"> 
+                    <div class="cc-popup__col"> <img width="100%" src="images/popap-about.png"> </div>
+                    <div class="cc-popup__col">
+                            <p>CryptoChange is an crypto exchange that supports trading of IMP coins.</p> 
+                            <p>There is all important information:</p>
+                    <ul>
+                        <li>
+                                IMP current price and discount. 
+                        </li>
+                        <li>
+                                One of the useful feature of BTCIMP.trade is crypto calculator, with which you can calculate the necessary amount of investment.
+                        </li>
+                        <li>
+                                Service also has referral system.
+                        </li>
+                        <li>
+                                It provides affiliates with the ability to generate income by driving traffic towards.
+                        </li>
+                        <li>
+                                CryptoChange is the easiest way to buy IMP.
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+
+                    
+                         
+                </section>
+                </div>
+                <div class="mdc-dialog__backdrop"></div>
+    </aside>
 
   <div class="mdc-snackbar cc-snackbar"
       aria-live="assertive"
@@ -704,9 +755,9 @@
         var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
         lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
-            
-        })();
+
         
+        })();
     </script>
     <!-- End of LiveChat code -->
 </body>

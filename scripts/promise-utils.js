@@ -82,23 +82,26 @@ export function wait(timeout) {
    * @returns {Promise.<Object>} The constructed promise.
    *
    */
+
+  let cachedLastPromise = null;
   export function get(url, payload = null, num, method = 'POST') {
+    cachedLastPromise = Promise.race([
+      new Promise((resolve, reject) => setTimeout(_ => {reject({result: null})}, 30 * 1000)),
+      fetch(url, payload ? {
+        method,
+        headers: {
+          'content-type': 'application/json',
+          'accept': 'application/json'
+        },
+        body: JSON.stringify(payload),
+        mode: 'cors',
+      }
+      : 
+      {}
+    ).then(response => response.json())
+    ])
     return createQueue(() => 
-        Promise.race([
-          new Promise((resolve, reject) => setTimeout(_ => {resolve({result: null})}, 10000)),
-          fetch(url, payload ? {
-            method,
-            headers: {
-              'content-type': 'application/json',
-              'accept': 'application/json'
-            },
-            body: JSON.stringify(payload),
-            mode: 'cors',
-          }
-          : 
-          {}
-        ).then(response => response.json())
-        ])
+      cachedLastPromise
       , num);
   }
 
@@ -118,10 +121,34 @@ export function createQueue(task, maxNumOfTry = 5) {
         if(maxNumOfTry > 0){
           setTimeout(getNextTask, 1000);
         }else{
+          console.log('fail to load')
           fail();
         }
       };
-      const getNextTask = () => task().then(done).catch(handleFailureResult);
+      const getNextTask = () => cachedLastPromise.then == 'function' ? cachedLastPromise.then(task).then(done).catch(handleFailureResult) : task().then(done).catch(handleFailureResult);
       getNextTask();
     });
   }
+
+
+/**
+ * Simple debouncer
+ * 
+ * @param {Function} func
+ * @param {number} wait Time while debounce
+ * @param {boolean} immediate Should be called immediatly
+ */
+export function debounce(func, wait, immediate) {
+  var timeout;
+  return function() {
+    var context = this, args = arguments;
+    var later = function() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
+};

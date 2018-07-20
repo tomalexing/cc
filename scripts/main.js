@@ -1,9 +1,10 @@
 import ModelEntry from './model';
 import loadAndInjectStyles from './css-loader';
+import loadAndInjectScript from './js-loader';
 
 import * as Db from './db.js';
 import * as PromiseUtils from './promise-utils';
-
+import detectIE from './ie';
 
 import QRCode from 'qrcode'
 import WebFont from 'webfontloader';
@@ -90,6 +91,7 @@ const Clipboard = (function(window, document, navigator) {
 
 const copyToClipboard = Clipboard.copy; 
 
+
 /**
  * The main class for the application.
  */
@@ -120,6 +122,7 @@ class App {
       depositBtn: document.querySelector('.cc-deposit__btn'),
       card: document.querySelector('.cc-exchange__card'),
       calcError: document.querySelector('.cc-calc-error'),
+      calcBtn: document.querySelector('#calc_buy_imp'),
       depositError: document.querySelector('.cc-deposit-error'),
       registerError: document.querySelector('.cc-register-error'),
       more: document.querySelector('.сс-toolbar__more'),
@@ -148,6 +151,7 @@ class App {
       referalEmbedCopyBtn2: document.querySelector('.cc-copyembed__btn2'),
       shareButtons: document.querySelector('.cc-shareButtons'),
       referopenDialog: document.querySelector('#cc-refer-dialog__trigger'),
+      residuePercentage: document.querySelector('#residue-percentage'),
     };
 
     this._model = {
@@ -242,11 +246,25 @@ class App {
       IMAGE: `//btcimp.trade/images/Logo_512.png`,
     };
 
-    this._initModel();
     this._init();
+    this._initModel();
     this._initElements();
+    this._calcPage();
 
 
+
+  }
+
+  _calcPage() {
+    if( window.location.pathname === '/calc.html'){
+
+      var searchParams = new URLSearchParams(window.location.search);
+      if( searchParams.has('invite') ){
+        let invite = searchParams.get('invite');
+        this._elements.calcBtn.setAttribute('href', `//btcimp.trade/?invite=${invite}`);
+      }
+    
+    }
   }
 
   _init() {
@@ -346,7 +364,14 @@ class App {
         }
       });
     }
+
+
     
+    if(document.querySelector('#cc-logo-dialog')) {
+      const logoDialog = new MDCDialog(document.querySelector('#cc-logo-dialog'));
+      Array.from(document.querySelectorAll('.сс-menu__logo')).map(el => el.addEventListener('click', () => logoDialog.show()));
+    }
+
     if(this._elements.referalEmbed) {
       const embedDialog = new MDCDialog(document.querySelector('#cc-embed-dialog'));
       this._elements.referalEmbed.addEventListener('click', () => embedDialog.show());
@@ -374,16 +399,16 @@ class App {
 
     // Set up event listeners for modifying the model.
     if( this._calcIMPBox )
-    this._calcIMPBox.addEventListener('input', () => this._booted.then(() => {
+    this._calcIMPBox.addEventListener('input', PromiseUtils.debounce.call(this, () => this._booted.then(() => {
       this._model.calcIMP.amount.value = parseFloat(this._calcIMPBox.value);
       this._validateInput('amountIMP');
-    }));
+    }), 600));
 
     if( this._calcBTCBox )
-    this._calcBTCBox.addEventListener('input', () => this._booted.then(() => {
+    this._calcBTCBox.addEventListener('input', PromiseUtils.debounce.call(this, () => this._booted.then(() => {
       this._model.calcBTC.amount.value = parseFloat(this._calcBTCBox.value);
       this._validateInput('amountBTC');
-    }));
+    }), 600));
 
     if( this._registerBox )
     this._registerBox.addEventListener('input', () => this._booted.then(() => {
@@ -396,6 +421,7 @@ class App {
     this._elements.registerForm.addEventListener('submit', (e) => {
       e.preventDefault();
       this._booted.then(() => {
+        this._validateAddress();
         if( this._validIMPAddress ){
           this._registerWallet(this._registerBox.value)
         }
@@ -405,6 +431,7 @@ class App {
     if( this._elements.registerBtn )
     this._elements.registerBtn.addEventListener('click', () =>
       this._booted.then( _ => {
+        this._validateAddress();
         if( this._validIMPAddress ){
           this._registerWallet(this._registerBox.value)
         }
@@ -473,7 +500,6 @@ class App {
           image: this.META.IMAGE,
         });
       });
-
     
     }
 
@@ -549,13 +575,14 @@ class App {
     calcIMP.amount.listen(() => convertInModel(calcIMP, calcBTC, 'imp', 'btc'));
     calcBTC.amount.listen(() => convertInModel(calcBTC, calcIMP, 'btc', 'imp'));
 
-
-    this._convertValue(0.01, 'imp', 'btc').then((cV) => {
-      const marker = (1.1).toLocaleString().charAt(1);
+    this._booted.then( _ => {
       // Trigger recalc.
       this._model.calcBTC.amount.value = 0.01;
-      this._model.calcIMP.calulatedAmount = _formatCurrency(cV);
-      this._calcBTCBox.placeholder = `0${marker}01`;
+
+      // because it emulation 
+      const marker = (1.1).toLocaleString().charAt(1);
+      this._calcBTCBox.placeholder = `0${marker}01`
+
       this._screens.exchange.classList.add('cc-input--has');
       PromiseUtils.wait(200).then(() =>
           this._screens.exchange.classList.add('cc-input--has-end'));
@@ -642,7 +669,7 @@ class App {
           
           if (!result) return
 
-          referal.link.value = `//btcimp.trade/?invite=${result.refcode || ''}`;
+          referal.link.value = `https://btcimp.trade/?invite=${result.refcode || ''}`;
 
 
           this.META.URL = referal.link.value;
@@ -650,71 +677,25 @@ class App {
         
 
           referal.bannerhtml.innerHTML = `
-            <a href="//btcimp.trade/?greeting=show&invite=${result.refcode || ''}" target="_blank">
-              <img src="//btcimp.trade/banner/impleum_banner_468x60.gif" />
+            <a href="https://btcimp.trade/?greeting=show&invite=${result.refcode || ''}" target="_blank">
+              <img src="https://btcimp.trade/banner/impleum_banner_468x60.gif" />
             </a>
           `;
 
           referal.bannerhtml2.innerHTML = `
-            <iframe src="https://btcimp.trade/calc.html" width="342px" height="200px" frameborder="0"><span data-mce-type="bookmark" style="display: inline-block; width: 0px; 
-            overflow: hidden; line-height: 0;" class="mce_SELRES_start"></span><span data-mce-type="bookmark" style="display: inline-block; width: 0px; overflow: hidden; 
-            line-height: 0;" class="mce_SELRES_start"></span><span data-mce-type="bookmark" style="display: inline-block; width: 0px; overflow: hidden; line-height: 0;" 
-            class="mce_SELRES_start"></span><span data-mce-type="bookmark" style="display: inline-block; width: 0px; overflow: hidden; line-height: 0;" class="mce_SELRES_start"></span>
-            <span data-mce-type="bookmark" style="display: inline-block; width: 0px; overflow: hidden; line-height: 0;" class="mce_SELRES_start"></span><span data-mce-type="bookmark" 
-            style="display: inline-block; width: 0px; overflow: hidden; line-height: 0;" class="mce_SELRES_start"></span></iframe>
-            <a style="position: absolute;
-            margin: 24px 0px 0px 112px;
-            border-radius: 14px;
-            border: 2px solid #3f4048;
-            /* height: 23px; */
-            color: white;
-            background: #2a2b31;
-            /* line-height: 18px; */
-            /* align-items: center; */
-            font-size: 12px;
-            font-weight: 300;
-            text-transform: lowercase;
-            letter-spacing: 0.3px;
-            padding-left: 16px;
-            padding-right: 16px;
-            vertical-align: center;
-            padding-bottom: -1px;
-            transition: border-color 0.2s var(--cc-default-curve, ease-in-out);" target="_blank" href="//btcimp.trade/?greeting=show&invite=${result.refcode || ''}"  
-            onmouseover="this.style.border='#7ac231 2px solid';" onmouseout="this.style.border='#3f4048 2px solid';" id="calc_buy_imp">buy imp</a>
+            <iframe src="https://btcimp.trade/calc.html?invite=${result.refcode || ''}" width="340px" height="171px" frameborder="0">/iframe>
             `;
           
+
           referal.bannertext.value = `
-<a href="//btcimp.trade/?greeting=show&invite=${result.refcode || ''}" target="_blank">
-  <img src="//btcimp.trade/banner/impleum_banner_468x60.gif" />
+<a href="https://btcimp.trade/?greeting=show&invite=${result.refcode || ''}" target="_blank">
+  <img src="https://btcimp.trade/banner/impleum_banner_468x60.gif" />
 </a>
           `;
 
           referal.bannertext2.value = `
-          <iframe src="https://btcimp.trade/calc.html" width="342px" height="200px" frameborder="0"><span data-mce-type="bookmark" style="display: inline-block; width: 0px; 
-          overflow: hidden; line-height: 0;" class="mce_SELRES_start"></span><span data-mce-type="bookmark" style="display: inline-block; width: 0px; overflow: hidden; 
-          line-height: 0;" class="mce_SELRES_start"></span><span data-mce-type="bookmark" style="display: inline-block; width: 0px; overflow: hidden; line-height: 0;" 
-          class="mce_SELRES_start"></span><span data-mce-type="bookmark" style="display: inline-block; width: 0px; overflow: hidden; line-height: 0;" class="mce_SELRES_start"></span>
-          <span data-mce-type="bookmark" style="display: inline-block; width: 0px; overflow: hidden; line-height: 0;" class="mce_SELRES_start"></span><span data-mce-type="bookmark" 
-          style="display: inline-block; width: 0px; overflow: hidden; line-height: 0;" class="mce_SELRES_start"></span></iframe>
-          <a style="position: absolute;
-          margin: 24px 0px 0px 112px;
-          border-radius: 14px;
-          border: 2px solid #3f4048;
-          color: white;
-          background: #2a2b31;
-          font-size: 12px;
-          font-weight: 300;
-          text-transform: lowercase;
-          letter-spacing: 0.3px;
-          padding-left: 16px;
-          padding-right: 16px;
-          vertical-align: center;
-          padding-bottom: -1px;
-          transition: border-color 0.2s var(--cc-default-curve, ease-in-out);" target="_blank" href="//btcimp.trade/?greeting=show&invite=${result.refcode || ''}"  
-          onmouseover="this.style.border='#7ac231 2px solid';" onmouseout="this.style.border='#3f4048 2px solid';">buy imp</a>
-          `;
-            
-          
+<iframe src="https://btcimp.trade/calc.html?invite=${result.refcode || ''}" width="340px" height="171px" frameborder="0"></iframe>
+            `;
 
           this._elements.referal.classList.remove('cc-exchange--hide');
           
@@ -767,7 +748,7 @@ class App {
       })
 
     }
-////////\\\\\\///////\\\\\\//////\\\\\\/////////\\\\\\\\\//////\\\\\\\\\\\\\\\\///////\\\\\\\\\\///////\////
+
     if(this._elements.cmc){
       this._fetchCMC().then(res => {
         if(res.data){
@@ -800,7 +781,6 @@ class App {
       })
 
     }
-    
 
     if( this._elements.referalBtn )
       this._elements.referalBtn.addEventListener('click', () =>
@@ -1024,32 +1004,6 @@ class App {
         //console.log('success!');
       })
   }
-
-  /**
-   * Returns a promise for the current price.
-   *
-   * @return {Promise.<Object>} The constructed promise.
-   */
-  _fetchPrice() {
-
-    let getPrice = PromiseUtils.get(url, {
-      "method": "price",
-      "params": [],
-      "jsonrpc": "2.0",
-      "id": 0,
-    }).then(v=>v,_=>{
-      this._snackbar && this._snackbar.show({
-        message: 'Connection with server has been lost.',
-      });
-    });
-
-
-    getPrice.then(this._handlePriceTable.bind(this))
-    getPrice.then(this._handleResidue.bind(this))
-
-    return getPrice
-
-  }  
 
   _registerWallet(wallet){
     return (async (wallet) => {
@@ -1281,13 +1235,12 @@ class App {
       value = value || 0;
 
       try {
-
         let {result} = await PromiseUtils.get(url, {
           "method": "calc",
           "params": [fromCur, value],
           "jsonrpc": "2.0",
           "id": 0,
-        }, 0);
+        }, 2);
         return result[`${toCur}_amount`];
 
       } catch (error) {
@@ -1329,6 +1282,9 @@ class App {
             if(this.priceTable[`${row}${column}`] == result.price ){
               price[`${row}${column}`]._bound[0].parentNode.parentNode.classList.add("cc-prices-table__row--current");
               isCurrentWas = true;
+              
+              this._elements.residuePercentage.innerHTML =  this.priceTable[`${row}Discount`];
+
             }else{
               isCurrentWas ? 
               price[`${row}${column}`]._bound[0].parentNode.parentNode.classList.add("cc-prices-table__row--future")
@@ -1346,6 +1302,37 @@ class App {
 
 }
 
+/** 
+ * IE polyfills goes here
+ */
 
-let app = new App();
-window.app = app;
+const versionIE = detectIE();
+if (versionIE === false) {
+  // not IE
+
+  let app = new App();
+  window.app = app;
+} else if (versionIE >= 12) {
+  // Edge
+
+  let app = new App();
+  window.app = app;
+
+} else {
+
+  loadAndInjectScript("https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.4/bluebird.min.js")
+  loadAndInjectScript("https://cdnjs.cloudflare.com/ajax/libs/url-search-params/1.0.2/url-search-params.js")
+  loadAndInjectScript("https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.4/fetch.min.js")
+  loadAndInjectScript("https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser-polyfill.min.js", function(){
+    
+      let app = new App();
+      window.app = app;
+
+      document.querySelector('.cc-exchange').classList.add('ie');
+
+  })
+
+
+}
+
+
