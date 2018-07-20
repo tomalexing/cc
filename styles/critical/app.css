@@ -196,7 +196,8 @@ textarea{
 }
 #cc-logo-dialog,
 #cc-about-dialog,
-#cc-refer-dialog{
+#cc-refer-dialog,
+#cc-embed-dialog{
   overflow: auto;
   align-items: flex-start;
 }
@@ -205,6 +206,7 @@ textarea{
 .mdc-dialog__surface{
   margin: 5% 0 60px;
 }
+
 
 .cc-shareBtn{
   margin: 0 10px 10px 0px;

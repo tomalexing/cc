@@ -17,6 +17,7 @@ import * as VanillaSharing from 'vanilla-sharing';
 import "regenerator-runtime/runtime";
 
 const FONT_TIMEOUT = 300;
+const TCP_EST_TIMEOUT = 10000;
 const EXTRA_STYLES = 'styles/styles.min.css';
 const url = "https://api.btcimp.trade";
 
@@ -527,26 +528,32 @@ class App {
     price.symbolBTC.value = 'BTC';
 
     // Load price from local storage, if available.
-    let loadPrice;
+    let loadPrice, fetchPrice = this._fetchPrice();
 
+    this._fitstTCPConnection = Promise.race([
+      fetchPrice,
+      PromiseUtils.wait(TCP_EST_TIMEOUT)
+    ]);
+    
+    this._fitstTCPConnection.then(_=> {console.log("First TCP Connection Established")})
     if( this._elements.price ){
       loadPrice = this._loadPrice()
-        .then((price) => price, () => this._fetchPrice().then(this._storePrice));
+        .then((price) => price, () => fetchPrice.then(this._storePrice));
 
       // Try to fetch latest price, regardless.
       PromiseUtils.after(loadPrice, () =>
-          this._fetchPrice().then(this._storePrice).catch());
+        fetchPrice.then(this._storePrice).catch());
 
 
       // Load price from local storage, if available.
       const loadHistory = this._loadHistory().catch(_=>{});
 
-      PromiseUtils.after(loadPrice, () => this._fetchHistory().catch());
+      PromiseUtils.after(this._fitstTCPConnection, () => this._fetchHistory().catch());
     }
 
     // Load adress from local storage, if available.
     if( this._elements.registerBox ){
-    const loadWallet = this._loadWallet()
+    const loadWallet = this._fitstTCPConnection.then(this._loadWallet)
       .then((val) => { register.address.value = val; }, () => {  // fallback
           if (window.location) {
             var searchParams = new URLSearchParams(window.location.search);
@@ -575,7 +582,7 @@ class App {
     calcIMP.amount.listen(() => convertInModel(calcIMP, calcBTC, 'imp', 'btc'));
     calcBTC.amount.listen(() => convertInModel(calcBTC, calcIMP, 'btc', 'imp'));
 
-    this._booted.then( _ => {
+    this._fitstTCPConnection.then( _ => {
       // Trigger recalc.
       this._model.calcBTC.amount.value = 0.01;
 
@@ -663,9 +670,9 @@ class App {
           this._drawQR();
         }
 
-        this._fetchHistory(wallet.imp_address).then(this._storeHistory);
+        this._fitstTCPConnection.then( _ => this._fetchHistory(wallet.imp_address)).then(this._storeHistory);
 
-        this._makeInvite(wallet.imp_address).then( result => {
+        this._fitstTCPConnection.then( _ => this._makeInvite(wallet.imp_address)).then( result => {
           
           if (!result) return
 
@@ -704,7 +711,7 @@ class App {
           this._elements.referalShare.removeAttribute('disabled');
         })
         
-        this._referralStats(wallet.imp_address).then(result => {
+        this._fitstTCPConnection.then( _ => this._referralStats(wallet.imp_address)).then(result => {
           if (!result) return
 
           referal.users.value = result.num_ref;
@@ -717,7 +724,7 @@ class App {
 
 
     if(this._elements.cmc){
-      this._fetchCMC().then(res => {
+      this._fitstTCPConnection.then( _ => this._fetchCMC()).then(res => {
         if(res.data){
           
           cmc.amount.value = res.data.quotes['USD'].price;
@@ -750,7 +757,7 @@ class App {
     }
 
     if(this._elements.cmc){
-      this._fetchCMC().then(res => {
+      this._fitstTCPConnection.then( _ => this._fetchCMC()).then(res => {
         if(res.data){
           
           cmc.amount2.value = (0.00013 * res.data.quotes['USD'].price).toFixed(5);
@@ -1089,7 +1096,7 @@ class App {
    */
   _fetchPrice() {
 
-    let getPrice = PromiseUtils.get(url, {
+    let getPrice = PromiseUtils.fetchJsonPost(url, {
       "method": "price",
       "params": [],
       "jsonrpc": "2.0",
@@ -1263,7 +1270,6 @@ class App {
 
   _handlePriceTable({result}){
     let { price } = this._model;
-
     if(!result) return
     // record if current row was
     let isCurrentWas = false

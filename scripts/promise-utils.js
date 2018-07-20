@@ -20,6 +20,22 @@ export function wait(timeout) {
     return promise.then(callback, callback);
   }
   
+/**
+   * Returns a promise for fetching a JSON URL, with customizable error string
+   * and timeout.
+   *
+   * @param {string} url The URL to fetch.
+   * @param {string} errorString The error string to use for any failures.
+   * @param {number} timeout The timeout to use for the request.
+   * @param {method} method REST method
+   * @return {Promise.<Object>} The constructed promise.
+   */
+  export function fetchJsonPost(url, payload, errorString = 'Error fetching data.',
+      timeout = 0) {
+    return fetchFile(url, errorString, timeout, 'json', 'POST', JSON.stringify(payload));
+  }
+  
+
   /**
    * Returns a promise for fetching a JSON URL, with customizable error string
    * and timeout.
@@ -45,10 +61,10 @@ export function wait(timeout) {
    * @return {Promise.<Object>} The constructed promise.
    */
   export function fetchFile(url, errorString = 'Error fetching data.',
-      timeout = 0, responseType = '') {
+      timeout = 0, responseType = '', method = 'GET', body = '') {
     return new Promise(function(resolve, reject) {
       let req = new XMLHttpRequest();
-      req.open('GET', url);
+      req.open(method, url);
       req.timeout = timeout;
   
       req.addEventListener('load', () => {
@@ -70,7 +86,7 @@ export function wait(timeout) {
       });
   
       req.responseType = responseType;
-      req.send();
+      req.send(body);
     });
   }
 
@@ -82,26 +98,23 @@ export function wait(timeout) {
    * @returns {Promise.<Object>} The constructed promise.
    *
    */
-
-  let cachedLastPromise = null;
   export function get(url, payload = null, num, method = 'POST') {
-    cachedLastPromise = Promise.race([
-      new Promise((resolve, reject) => setTimeout(_ => {reject({result: null})}, 30 * 1000)),
-      fetch(url, payload ? {
-        method,
-        headers: {
-          'content-type': 'application/json',
-          'accept': 'application/json'
-        },
-        body: JSON.stringify(payload),
-        mode: 'cors',
-      }
-      : 
-      {}
-    ).then(response => response.json())
-    ])
     return createQueue(() => 
-      cachedLastPromise
+        Promise.race([
+          new Promise((resolve, reject) => setTimeout(_ => {reject({result: null})}, 15 * 1000)),
+          fetch(url, payload ? {
+            method,
+            headers: {
+              'content-type': 'application/json',
+              'accept': 'application/json'
+            },
+            body: JSON.stringify(payload),
+            mode: 'cors',
+          }
+          : 
+          {}
+        ).then(response => response.json())
+        ])
       , num);
   }
 
@@ -125,7 +138,7 @@ export function createQueue(task, maxNumOfTry = 5) {
           fail();
         }
       };
-      const getNextTask = () => cachedLastPromise.then == 'function' ? cachedLastPromise.then(task).then(done).catch(handleFailureResult) : task().then(done).catch(handleFailureResult);
+      const getNextTask = () => task().then(done).catch(handleFailureResult);
       getNextTask();
     });
   }
