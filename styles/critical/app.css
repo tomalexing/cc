@@ -225,3 +225,9 @@ textarea{
 .mdc-dialog .mdc-dialog__footer .mdc-dialog__footer__button::before {
   background-color: rgba(0, 0, 0, 0.9) !important;
   }
+
+
+.cc-toolbar__menu-addon{
+  opacity: 0;
+  transition: opacity 0.4s var(--cc-default-curve);
+}

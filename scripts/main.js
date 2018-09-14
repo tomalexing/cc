@@ -137,6 +137,7 @@ class App {
       historyBlock: document.querySelector('#history'),
       menuM: document.querySelector('.cc-mobile-menu'),
       menuD: document.querySelector('.cc-desktop-menu'),
+      logoAddon: document.querySelector('.cc-toolbar__menu-addon'),
       depositBlock: document.querySelector('#depositBlock'),
       cmc: document.querySelector('#cmc'),
       cmcGraph: document.querySelector('.cc-cmc__graph'),
@@ -309,10 +310,12 @@ class App {
         this._booted.then( _ => PromiseUtils.wait(200).then( _ => {
           if( window.innerWidth <= 600 ){
             this._elements.menuM.style.display = 'block'
+            this._elements.logoAddon.style.opacity = '1';
           }else{
             this._elements.menuD.style.display = 'block'
             PromiseUtils.wait(200).then( _ => {
               this._elements.menuD.style.opacity = '1';
+              this._elements.logoAddon.style.opacity = '1';
             });
           }
         }));
@@ -727,7 +730,7 @@ class App {
       this._fitstTCPConnection.then( _ => this._fetchCMC()).then(res => {
         if(res.data){
           
-          cmc.amount.value = res.data.quotes['USD'].price;
+          cmc.amount.value = res.data.quotes['USD'].price.toFixed(5);
           cmc.change.value = res.data.quotes['USD'].percent_change_24h;
 
           if( isNaN( parseFloat(cmc.change.value)) ) return 
@@ -759,7 +762,6 @@ class App {
     if(this._elements.cmc){
       this._fitstTCPConnection.then( _ => this._fetchCMC()).then(res => {
         if(res.data){
-          
           cmc.amount2.value = (0.00013 * res.data.quotes['USD'].price).toFixed(5);
           cmc.change2.value = res.data.quotes['USD'].percent_change_24h;
 
@@ -1089,7 +1091,9 @@ class App {
 
     return getPrice
 
-  }  /**
+  }  
+  
+  /**
    * Returns a promise for the current price.
    *
    * @return {Promise.<Object>} The constructed promise.
@@ -1278,13 +1282,14 @@ class App {
       for (let column of ['BTC', 'IMP', 'Discount']) {
 
           // css stuff
-          if(column == "BTC"){
+          if(column == "BTC" && price[`${row}${column}`]._bound[0]){
 
             // remove all classes 
+        
             price[`${row}${column}`]._bound[0].parentNode.parentNode.classList.remove("cc-prices-table__row--past","cc-prices-table__row--current",
             "cc-prices-table__row--future")
 
-            // set proper css class 
+            // set proper css class   
             if(this.priceTable[`${row}${column}`] == result.price ){
               price[`${row}${column}`]._bound[0].parentNode.parentNode.classList.add("cc-prices-table__row--current");
               isCurrentWas = true;
@@ -1300,6 +1305,7 @@ class App {
           }
           
           // applying actual values
+          if(price[`${row}${column}`])
           price[`${row}${column}`].value = this.priceTable[`${row}${column}`].toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 8})
       }
     }

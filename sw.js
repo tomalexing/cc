@@ -1,4 +1,4 @@
-const APP_CACHE = 'cc-v1';
+const APP_CACHE = 'cc-v2';
 
 // Cached files
 const urlsToCache = [
@@ -35,8 +35,12 @@ self.addEventListener('activate', (event) => {
 // Fetch data from cache.
 self.addEventListener('fetch', (event) => {
   const requestUrl = new URL(event.request.url);
-  if (requestUrl.pathname === '/jsonrpc') {
-    // Rates. Don't cache.
+  if (requestUrl.href.includes('api') || 
+      requestUrl.href.includes('coinmarketcap') || 
+      requestUrl.href.includes('google-analytics') || 
+      requestUrl.href.includes('googletagmanager') ||
+      requestUrl.href.includes('yandex')) {
+    // API. Don't cache.
     fetch(event.request);
   } else if (requestUrl.pathname === '/') {
     // Serve from cache, update in background.
@@ -99,5 +103,6 @@ function fromCache(request) {
  * @return {Promise} The storage promise.
  */
 function update(request, response) {
-  return caches.open(APP_CACHE).then((cache) => cache.put(request, response));
+  if(request.method == "POST") Promise.resolve(response); 
+  return caches.open(APP_CACHE).then((cache) => cache.put(request, response)).catch( _ => Promise.resolve(response)) ;
 }
