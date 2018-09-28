@@ -609,8 +609,8 @@ font-size: 12px;
   text-transform: uppercase;
   /* Text style for "BTC/USD" */
   letter-spacing: 0.24px;
-left: 7.6px;
-top: 5.8px;
+  left: 7.6px;
+  top: 5.8px;
 }
 
 .cc-cmc__graph{

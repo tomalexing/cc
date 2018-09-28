@@ -24,7 +24,7 @@ html, body {
   background: var(--mdc-theme-background, #18191D);
   height: 100%;
   /* Disable pull-to-refresh in supporting browsers. */
-  overscroll-behavior-y: contain;
+  
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
@@ -197,7 +197,8 @@ textarea{
 #cc-logo-dialog,
 #cc-about-dialog,
 #cc-refer-dialog,
-#cc-embed-dialog{
+#cc-embed-dialog,
+#cc-exchange-dialog{
   overflow: auto;
   align-items: flex-start;
 }
