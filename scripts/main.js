@@ -153,7 +153,6 @@ class App {
       referalEmbedCopyBtn2: document.querySelector('.cc-copyembed__btn2'),
       shareButtons: document.querySelector('.cc-shareButtons'),
       referopenDialog: document.querySelector('#cc-refer-dialog__trigger'),
-      residuePercentage: document.querySelector('#residue-percentage'),
     };
 
     this._model = {
@@ -219,9 +218,9 @@ class App {
     }
 
     this.priceTable = {
-      firstBTC: 0.000065,
-      firstDiscount: '50%',
-      firstIMP: 10000,
+      firstBTC: 0.000039,
+      firstDiscount: '70%',
+      firstIMP: 100000,
       
       secondBTC: 0.000078,
       secondDiscount: '40%',
@@ -506,6 +505,9 @@ class App {
       });
     
     }
+
+
+    this._timer();
 
   }
   
@@ -984,7 +986,7 @@ class App {
         <div class="cc-history-top">
           <span class="cc-history-time">${date} </span>
           <img class="cc-history-arrow" src="${inTx}"/>
-          <span class="cc-history-amount" >${info.imp_amount} IMP</span>
+          <span class="cc-history-amount" >${info.imp_amount} IMPL</span>
         </div>
         <a target="_blank" href="https://explorer.impleum.com/tx/${info.imp_tx}" class="cc-history-wallet">
           ${info.imp_tx ? info.imp_tx : ''}
@@ -1278,31 +1280,30 @@ class App {
     // record if current row was
     let isCurrentWas = false
 
-    for (let row of ['first', 'second', 'third', 'fourth', 'fifth']) {
+    for (let row of ['first']) {
       for (let column of ['BTC', 'IMP', 'Discount']) {
 
-          // css stuff
-          if(column == "BTC" && price[`${row}${column}`]._bound[0]){
+          // // css stuff
+          // if(column == "BTC" && price[`${row}${column}`]._bound[0]){
 
-            // remove all classes 
+          //   // remove all classes 
         
-            price[`${row}${column}`]._bound[0].parentNode.parentNode.classList.remove("cc-prices-table__row--past","cc-prices-table__row--current",
-            "cc-prices-table__row--future")
+          //   price[`${row}${column}`]._bound[0].parentNode.parentNode.classList.remove("cc-prices-table__row--past","cc-prices-table__row--current",
+          //   "cc-prices-table__row--future")
 
-            // set proper css class   
-            if(this.priceTable[`${row}${column}`] == result.price ){
-              price[`${row}${column}`]._bound[0].parentNode.parentNode.classList.add("cc-prices-table__row--current");
-              isCurrentWas = true;
+          //   // set proper css class   
+          //   if(this.priceTable[`${row}${column}`] == result.price ){
+          //     price[`${row}${column}`]._bound[0].parentNode.parentNode.classList.add("cc-prices-table__row--current");
+          //     isCurrentWas = true;
               
-              this._elements.residuePercentage.innerHTML =  this.priceTable[`${row}Discount`];
 
-            }else{
-              isCurrentWas ? 
-              price[`${row}${column}`]._bound[0].parentNode.parentNode.classList.add("cc-prices-table__row--future")
-              :
-              price[`${row}${column}`]._bound[0].parentNode.parentNode.classList.add("cc-prices-table__row--past")
-            }
-          }
+          //   }else{
+          //     isCurrentWas ? 
+          //     price[`${row}${column}`]._bound[0].parentNode.parentNode.classList.add("cc-prices-table__row--future")
+          //     :
+          //     price[`${row}${column}`]._bound[0].parentNode.parentNode.classList.add("cc-prices-table__row--past")
+          //   }
+          // }
           
           // applying actual values
           if(price[`${row}${column}`])
@@ -1310,6 +1311,151 @@ class App {
       }
     }
   }
+
+  _timer(){
+    //Useful vars
+    var isPast = false,
+        container = document.querySelector('.counterDown__timer');
+
+    if(!container) return
+
+    var countMoment = new Date(container.getAttribute('data-date')),
+        MarkLabels = {
+          data: {},
+          getLabel: function getLabel(num, labelsKey) {
+              var label = "";
+              this.data[labelsKey].forEach(function (elem) {
+                  if (elem.type == 'num') {
+                      if (num >= elem.rule) label = elem.label;
+                  } else if (elem.rule.test(num)) {
+                      label = elem.label;
+                      return false;
+                  }
+              });
+              return label;
+          },
+          setLabels: function setLabels(labelsObj) {
+              var key = 'cc-' + Math.round(Math.random() * 1000);
+              this.data[key] = labelsObj;
+              return key;
+          }
+      };
+
+    Array.from(container.querySelectorAll('.counterDown__timer__in')).map((item) => {
+        var newLabels = item.querySelector('.counterDown__timer__datamark').getAttribute('data-labels').split('|').map(function (elem) {
+            var rule = elem.trim().split(':');
+
+            if (!isNaN(parseInt(rule[0]))) return {
+                rule: parseInt(rule[0]),
+                label: rule[1],
+                type: 'num'
+            };else return {
+                rule: new RegExp(rule[0].replace(/\#/g, '')),
+                label: rule[1],
+                type: 'reg'
+            };
+        });
+
+        item.querySelector('.counterDown__timer__datamark').setAttribute('data-labelsKey', MarkLabels.setLabels(newLabels));
+    });
+
+    setInterval(function () {
+        var borrow = {
+            minute: 0,
+            hour: 0,
+            day: 0,
+            month: 0,
+            year: 0
+        };
+
+        Array.from(container.querySelectorAll('.counterDown__timer__in')).reverse().map(function (el) {
+            var mark = el.getAttribute('data-mark'),
+                time = '',
+                datatime = el.querySelector('.counterDown__timer__datatime'),
+                datamark = el.querySelector('.counterDown__timer__datamark'),
+                labelsKey = datamark.getAttribute('data-labelsKey');
+
+            switch (mark) {
+                case 'years':
+                    time = countMoment.getFullYear() - new Date().getFullYear() - borrow.year;
+
+                    borrow = {
+                        minute: 0,
+                        hour: 0,
+                        day: 0,
+                        month: 0,
+                        year: 0
+                    };
+                    if (time < 0) {
+                        isPast = true;
+                    }
+
+                    if (isPast) time = 0;
+                    if (time == 0 && el.classlist) el.classlist.add('counterDown__timer__datatime--hide-years');
+
+                    break;
+                case 'months':
+                    time = countMoment.getMonth() - new Date().getMonth() - borrow.month;
+                    if (time < 0) {
+                        time += 12;
+                        borrow.year = 1;
+                    }
+                    if (isPast) time = 0;
+                    if (time == 0 && el.classlist) el.classlist.add('counterDown__timer__datatime--hide-months');
+
+                    break;
+                case 'days':
+                    time = countMoment.getDate() - new Date().getDate() - borrow.day;
+                    if (time < 0) {
+                        time += 31;
+                        borrow.month = 1;
+                    }
+                    if (isPast) time = '--';
+                    if (time == 0 && el.classlist) el.classlist.add('counterDown__timer__datatime--hide-days');
+
+                    break;
+                case 'hours':
+                    time = countMoment.getHours() - new Date().getHours() - borrow.hour;
+                    if (time < 0) {
+                        time += 24;
+                        borrow.day = 1;
+                    }
+                    if (isPast) time = '--';
+                    if (time == 0 && el.classlist) el.classlist.add('counterDown__timer__datatime--hide-hours');
+
+                    break;
+                case 'minutes':
+                    time = countMoment.getMinutes() - new Date().getMinutes() - borrow.minute;
+                    if (time < 0) {
+                        time += 60;
+                        borrow.hour = 1;
+                    }
+                    if (isPast) time = '--';
+                    if (time == 0 && el.classlist) el.classlist.add('counterDown__timer__datatime--hide-minutes');
+
+                    break;
+                case 'seconds':
+                    time = countMoment.getSeconds() - new Date().getSeconds();
+                    if (time < 0) {
+                        time += 60;
+                        borrow.minute = 1;
+                    }
+                    if (isPast) time = '--';
+                    if (time == 0 && el.classlist) el.classlist.add('counterDown__timer__datatime--hide-seconds');
+
+                    break;
+
+                default:
+                    break;
+            }
+
+            el.classList.remove('hidden');
+            datatime.innerHTML = time;
+            datamark.innerHTML = MarkLabels.getLabel(time, labelsKey);
+        });
+    }, 1000);
+  }
+
 
 
 }

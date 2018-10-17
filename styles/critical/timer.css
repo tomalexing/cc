@@ -1,0 +1,28 @@
+.counterDown__timer{
+    display: flex;
+    justify-content: space-around;
+}
+
+.counterDown__timer__in{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.counterDown__timer__datamark{
+    color: #858585;
+    color: var(--cc-text,#858585);
+    font-size: 12px;
+}
+
+.counterDown__timer__datatime{
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+.counterDown__timer__in:last-child .counterDown__timer__datatime{
+    color: #7ac231;
+}
+

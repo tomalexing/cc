@@ -1,4 +1,4 @@
-const APP_CACHE = 'cc-v2';
+const APP_CACHE = 'cc-v5';
 
 // Cached files
 const urlsToCache = [
