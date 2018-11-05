@@ -232,3 +232,17 @@ textarea{
   opacity: 0;
   transition: opacity 0.4s var(--cc-default-curve);
 }
+
+.cc-cryptobridge{
+  margin: 50px auto auto;
+  text-align: center;
+  padding: 10px;
+}
+
+.cc-cryptobridge__title{
+  color: var(--cc-text-white, #f1f1f1);
+}
+
+.cc-cryptobridge__image{
+  width: 100%;
+}

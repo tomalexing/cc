@@ -104,15 +104,17 @@
                     <li class="mdc-list-item " role="menuitem" tabindex="0">
                             <a class="mdc-list-link" target="_blank" href="https://impleum.com/wallet/"> Impleum Wallet </a>
                     </li>
+                    <!--
                     <li class="mdc-list-item сс-menu__howtobuy" role="menuitem" tabindex="0">
                             How to Buy IMPL
-                    </li>
+                    </li> -->
                     <li class="mdc-list-item сс-menu__greeting" role="menuitem" tabindex="0">
                             About Impleum
                     </li>
+                    <!--
                     <li class="mdc-list-item сс-menu__logo" role="menuitem" tabindex="0">
                             About CryptoChange
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             <div style="display: none;" class="cc-mobile-menu сс-menu-anchor mdc-menu-anchor mdc-toolbar__icon">
@@ -130,15 +132,16 @@
                   <li class="mdc-list-item " role="menuitem" tabindex="0">
                         <a class="mdc-list-link" target="_blank" href="https://impleum.com/wallet/"> Impleum Wallet </a>
                   </li>
-                  <li class="mdc-list-item сс-menu__howtobuy" role="menuitem" tabindex="0">
+                 <!-- <li class="mdc-list-item сс-menu__howtobuy" role="menuitem" tabindex="0">
                         How to Buy IMPL
-                  </li>
+                  </li> -->
                   <li class="mdc-list-item сс-menu__greeting" role="menuitem" tabindex="0">
                         About Impleum
                   </li>
+                  <!--
                   <li class="mdc-list-item сс-menu__logo" role="menuitem" tabindex="0">
                         About CryptoChange
-                  </li>
+                  </li>-->
                 </ul>
               </div>
             </div>
@@ -148,53 +151,28 @@
   </header>
 
   <div class="cc-exchange cc-screen cc-screen--hidden">
+    
+    <div class="cc-cryptobridge">
+        
+        <img class="cc-cryptobridge__image" src="./images/CB.png" alt="CryptoBridge">
+        
+        <a href="https://wallet.crypto-bridge.org/market/BRIDGE.IMPL_BRIDGE.BTC">
+            <h1 class="cc-cryptobridge__title">
+                IMPL Coin is now listed on CryptoBridge.
+            </h1>
+        </a>
+
+
+        <a href="https://wallet.crypto-bridge.org/market/BRIDGE.IMPL_BRIDGE.BTC" class="mdc-button mdc-button--raised cc-button cc-register__btn" >
+            trade IMPL
+        </a>    
+    </div>
+
+
+    <!--
     <div class="cc-exchange__column">
-            <div id="cmc" style="display: none;" class="cc-card mdc-elevation--z10 cc-cmc cc-screen--hidden">
-                    <h3 class="cc-card__title">
-                        Price
-                    </h3>
-                    <div class="cc-exchange__block cc-nomargin">
-                        <img class="cc-cmc__icon2" src="images/Group3@2x.png"> 
-                        <div class="cc-cmc__graph2"> </div>
-                        <div class="cc-cmc__topline">
-                            <span class="cc-cmc__pair">IMPL/USD</span> 
-
-                            <svg id="cc-arrow" class="cc-arrow" width="8" height="12" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 8 12">
-                                <g transform="matrix(1,0,0,1,-609,-724)">
-                                    <g><path d="M613.66667,736v-9.44667l2.39333,2.38667l0.94,-0.94l-4,-4l-4,4l0.94,0.94l2.39333,-2.38667v9.44667z" id="Path-0"/></g>
-                                </g>
-                            </svg>
-
-                            <span class="cc-cmc__change" data-cc-bind="cmc.change"></span>
-                            <span class="cc-cmc__change__addon">%</span>
-                        </div>
-                        <div class="cc-cmc__bottomline">
-                            <span class="cc-cmc__amount" data-cc-bind="cmc.amount2"></span> <span class="cc-cmc__addon">USD</span>
-                        </div>
-                    </div>
-
-                    <div class="cc-exchange__block cc-nomargin">
-                        <img class="cc-cmc__icon"  style="margin-top: 10PX;" src="images/btc-logo@2x.png"> 
-                        <div class="cc-cmc__graph"> </div>
-                        <div class="cc-cmc__topline2">
-                            <span class="cc-cmc__pair">BTC/USD</span> 
-        
-                            <svg id="cc-arrow2" class="cc-arrow2" width="8" height="12" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 8 12">
-                                <g transform="matrix(1,0,0,1,-609,-724)">
-                                    <g><path d="M613.66667,736v-9.44667l2.39333,2.38667l0.94,-0.94l-4,-4l-4,4l0.94,0.94l2.39333,-2.38667v9.44667z" id="Path-1"/></g>
-                                </g>
-                            </svg>
-        
-                            <span class="cc-cmc__change" data-cc-bind="cmc.change"></span> 
-                            <span class="cc-cmc__change__addon">%</span> 
-                        </div>
-                        <div class="cc-cmc__bottomline">
-                            <span class="cc-cmc__amount" data-cc-bind="cmc.amount"></span> <span class="cc-cmc__addon">USD</span>
-                        </div>
-                    </div>
-            </div>
-
-            <div class="cc-card mdc-elevation--z10">
+       
+             <div class="cc-card mdc-elevation--z10">
                     <h3 class="cc-card__title" style="letter-spacing: 0px;">Time until to listing on cryptobridge exchange </h3>
                     <div class="cc-counterDown">
                         <div class="counterDown__in">
@@ -223,98 +201,144 @@
                             </div>
                         </div>
                     </div>
-            </div>
+            </div> 
+        
 
             <div class="cc-card mdc-elevation--z10">
-                    <h3 class="cc-card__title">
-                            Special IMPL Price and Amount
-                    </h3>
-                    <div class="cc-prices">
-                        <table class="cc-prices-table">
-                            <thead>   
-                                <tr> 
-                                    <td style="text-align: left; width: 27%;">Price</td>
-                                    <td style="text-align: center; width: 30%;">Discount</td>
-                                    <td style="text-align: right"><span class="cc-prices-table__addon">Coins total</span></td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="cc-prices-table__row--current" >
-                                    <td>
-                                        <span data-cc-bind="price.first.amountBTC"></span>
-                                        <span class="cc-prices-table__addon"    data-cc-bind="price.symbolBTC"></span>
-                                    </td>
-                                    <td style="text-align: center">
-                                        <span data-cc-bind="price.first.discount"></span>
-                                    </td>
-                                    <td style="text-align: right">
-                                        <span data-cc-bind="price.first.amountIMP"></span>
-                                        <span class="cc-prices-table__addon">IMPL</span> 
-                                    </td>
-                                </tr>
-                                <!-- <tr>
-                                    <td>
-                                        <span data-cc-bind="price.second.amountBTC"></span>
-                                        <span class="cc-prices-table__addon"    data-cc-bind="price.symbolBTC"></span>
-                                    </td>
-                                    <td style="text-align: center">
-                                        <span data-cc-bind="price.second.discount"></span>
-                                    </td>
-                                    <td style="text-align: center">
-                                        <span data-cc-bind="price.second.amountIMP"></span>
-                                        
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span data-cc-bind="price.third.amountBTC"></span>
-                                        <span class="cc-prices-table__addon"    data-cc-bind="price.symbolBTC"></span>
-                                    </td>
-                                    <td style="text-align: center">
-                                        <span data-cc-bind="price.third.discount"></span>
-                                    </td>
-                                    <td style="text-align: center">
-                                        <span data-cc-bind="price.third.amountIMP"></span>
-                                        
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span data-cc-bind="price.fourth.amountBTC"></span>
-                                        <span class="cc-prices-table__addon"    data-cc-bind="price.symbolBTC"></span>
-                                    </td>
-                                    <td style="text-align: center">
-                                        <span data-cc-bind="price.fourth.discount"></span>
-                                    </td>
-                                    <td style="text-align: center">
-                                        <span data-cc-bind="price.fourth.amountIMP"></span>
-                                        
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span data-cc-bind="price.fifth.amountBTC"></span>
-                                        <span class="cc-prices-table__addon"    data-cc-bind="price.symbolBTC"></span>
-                                    </td>
-                                    <td style="text-align: center">
-                                        <span data-cc-bind="price.fifth.discount"></span>
-                                    </td>
-                                    <td style="text-align: center">
-                                        <span data-cc-bind="price.fifth.amountIMP"></span>
-                                        
-                                    </td>
-                                </tr>
-                                -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <h3 class="cc-card__title">
+                    Special IMPL Price and Amount
+            </h3>
+            <div class="cc-prices">
+                <table class="cc-prices-table">
+                    <thead>   
+                        <tr> 
+                            <td style="text-align: left; width: 27%;">Price</td>
+                            <td style="text-align: center; width: 30%;">Discount</td>
+                            <td style="text-align: right"><span class="cc-prices-table__addon">Coins total</span></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="cc-prices-table__row--current" >
+                            <td>
+                                <span data-cc-bind="price.first.amountBTC"></span>
+                                <span class="cc-prices-table__addon"    data-cc-bind="price.symbolBTC"></span>
+                            </td>
+                            <td style="text-align: center">
+                                <span data-cc-bind="price.first.discount"></span>
+                            </td>
+                            <td style="text-align: right">
+                                <span data-cc-bind="price.first.amountIMP"></span>
+                                <span class="cc-prices-table__addon">IMPL</span> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span data-cc-bind="price.second.amountBTC"></span>
+                                <span class="cc-prices-table__addon"    data-cc-bind="price.symbolBTC"></span>
+                            </td>
+                            <td style="text-align: center">
+                                <span data-cc-bind="price.second.discount"></span>
+                            </td>
+                            <td style="text-align: center">
+                                <span data-cc-bind="price.second.amountIMP"></span>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span data-cc-bind="price.third.amountBTC"></span>
+                                <span class="cc-prices-table__addon"    data-cc-bind="price.symbolBTC"></span>
+                            </td>
+                            <td style="text-align: center">
+                                <span data-cc-bind="price.third.discount"></span>
+                            </td>
+                            <td style="text-align: center">
+                                <span data-cc-bind="price.third.amountIMP"></span>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span data-cc-bind="price.fourth.amountBTC"></span>
+                                <span class="cc-prices-table__addon"    data-cc-bind="price.symbolBTC"></span>
+                            </td>
+                            <td style="text-align: center">
+                                <span data-cc-bind="price.fourth.discount"></span>
+                            </td>
+                            <td style="text-align: center">
+                                <span data-cc-bind="price.fourth.amountIMP"></span>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span data-cc-bind="price.fifth.amountBTC"></span>
+                                <span class="cc-prices-table__addon"    data-cc-bind="price.symbolBTC"></span>
+                            </td>
+                            <td style="text-align: center">
+                                <span data-cc-bind="price.fifth.discount"></span>
+                            </td>
+                            <td style="text-align: center">
+                                <span data-cc-bind="price.fifth.amountIMP"></span>
+                                
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <div class="cc-card mdc-elevation--z10">
             <h3 class="cc-card__title" style="letter-spacing: 0px;">Amount Available with current discount</h3>
             <div>
                 <span class="cc-residue" data-cc-bind="residue.amount"></span> <span class="cc-residue__addon">IMPL</span>
             </div>
         </div>    
+
+        <div id="cmc" style="display: none;" class="cc-card mdc-elevation--z10 cc-cmc cc-screen--hidden">
+            <h3 class="cc-card__title">
+                Regular Price
+            </h3>
+            <div class="cc-exchange__block cc-nomargin">
+                <img class="cc-cmc__icon2" src="images/Group3@2x.png"> 
+                <div class="cc-cmc__graph2"> </div>
+                <div class="cc-cmc__topline">
+                    <span class="cc-cmc__pair">IMPL/USD</span> 
+
+                    <svg id="cc-arrow" class="cc-arrow" width="8" height="12" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 8 12">
+                        <g transform="matrix(1,0,0,1,-609,-724)">
+                            <g><path d="M613.66667,736v-9.44667l2.39333,2.38667l0.94,-0.94l-4,-4l-4,4l0.94,0.94l2.39333,-2.38667v9.44667z" id="Path-0"/></g>
+                        </g>
+                    </svg>
+
+                    <span class="cc-cmc__change" data-cc-bind="cmc.change"></span>
+                    <span class="cc-cmc__change__addon">%</span>
+                </div>
+                <div class="cc-cmc__bottomline">
+                    <span class="cc-cmc__amount" data-cc-bind="cmc.amount2"></span> <span class="cc-cmc__addon">USD</span>
+                </div>
+            </div>
+
+            <div class="cc-exchange__block cc-nomargin">
+                <img class="cc-cmc__icon"  style="margin-top: 10PX;" src="images/btc-logo@2x.png"> 
+                <div class="cc-cmc__graph"> </div>
+                <div class="cc-cmc__topline2">
+                    <span class="cc-cmc__pair">BTC/USD</span> 
+
+                    <svg id="cc-arrow2" class="cc-arrow2" width="8" height="12" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 8 12">
+                        <g transform="matrix(1,0,0,1,-609,-724)">
+                            <g><path d="M613.66667,736v-9.44667l2.39333,2.38667l0.94,-0.94l-4,-4l-4,4l0.94,0.94l2.39333,-2.38667v9.44667z" id="Path-1"/></g>
+                        </g>
+                    </svg>
+
+                    <span class="cc-cmc__change" data-cc-bind="cmc.change"></span> 
+                    <span class="cc-cmc__change__addon">%</span> 
+                </div>
+                <div class="cc-cmc__bottomline">
+                    <span class="cc-cmc__amount" data-cc-bind="cmc.amount"></span> <span class="cc-cmc__addon">USD</span>
+                </div>
+            </div>
+        </div>
        
     </div>
     <div class="cc-exchange__column">
@@ -486,9 +510,8 @@
             </div>
         </div>
     </div>
-
+    -->  
   </div>
-
 
   <div class="cc-animation">
     <div class="cc-animation__ruler"></div>
@@ -725,25 +748,25 @@
                 <div class="cc-popup__grid"> 
                     <div class="cc-popup__col"> <img width="100%" src="images/popap-about.png"> </div>
                     <div class="cc-popup__col">
-                            <p>CryptoChange is an crypto exchange that supports trading of IMPL coins.</p> 
-                            <p>There is all important information:</p>
-                    <ul>
-                        <li>
-                                IMPL current price and discount. 
-                        </li>
-                        <li>
-                                One of the useful feature of BTCIMP.trade is crypto calculator, with which you can calculate the necessary amount of investment.
-                        </li>
-                        <li>
-                                Service also has referral system.
-                        </li>
-                        <li>
-                                It provides affiliates with the ability to generate income by driving traffic towards.
-                        </li>
-                        <li>
-                                CryptoChange is the easiest way to buy IMPL.
-                        </li>
-                    </ul>
+                        <p>CryptoChange is an crypto exchange that supports trading of IMPL coins.</p> 
+                        <p>There is all important information:</p>
+                        <ul>
+                            <li>
+                                    IMPL current price and discount. 
+                            </li>
+                            <li>
+                                    One of the useful feature of BTCIMP.trade is crypto calculator, with which you can calculate the necessary amount of investment.
+                            </li>
+                            <li>
+                                    Service also has referral system.
+                            </li>
+                            <li>
+                                    It provides affiliates with the ability to generate income by driving traffic towards.
+                            </li>
+                            <li>
+                                    CryptoChange is the easiest way to buy IMPL.
+                            </li>
+                        </ul>
                     </div>
                 </div>
 
@@ -766,16 +789,16 @@
 
   <!-- {% include main js %} -->
 
-  <!-- Register Service Worker  -->
+  <!-- Register Service Worker 
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js').catch(function(err) {
         console.log('ServiceWorker registration failed: ', err);
       });
     }
-  </script>
+  </script> -->
   
-  <!-- Start of LiveChat (www.livechatinc.com) code -->
+  <!-- Start of LiveChat (www.livechatinc.com) code 
     <script type="text/javascript">
         window.__lc = window.__lc || {};
         window.__lc.license = 9907775;
@@ -786,6 +809,6 @@
 
         
         })();
-    </script>
+    </script> -->
     <!-- End of LiveChat code -->
 </body>

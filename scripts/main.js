@@ -507,7 +507,7 @@ class App {
     }
 
 
-    this._timer();
+    //this._timer();
 
   }
   
